@@ -1,16 +1,16 @@
 package com.launchcode.intheloop.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name ="posts")
-public class Post {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+@Getter
+@Setter
+public class Post extends AbstractEntity {
 
     private String title;
     private String content;
@@ -25,29 +25,4 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }
