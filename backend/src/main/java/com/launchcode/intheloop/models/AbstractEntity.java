@@ -15,16 +15,14 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue
-    private int id;
-
-    //equals and hash for id in lombok annotations @Getter @Setter
+    private Long id;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractEntity that = (AbstractEntity) o;
-        return getId() == that.getId();
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override

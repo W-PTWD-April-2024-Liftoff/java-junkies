@@ -1,25 +1,28 @@
 package com.launchcode.intheloop.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.ArrayList;
+
 import java.util.List;
 
+@Entity
+@Table(name ="posts")
 @Getter
 @Setter
-@Entity
 public class Post extends AbstractEntity {
 
-    @ManyToOne
-    private WatchList watchList;
+    private String title;
+    private String content;
 
-    @JoinColumn(name = "post_id")
-    @OneToMany
-    private final List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
-    public Post(){}
+    @ManyToMany
+    @JoinTable(
+            name = "post_tags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags;
 }

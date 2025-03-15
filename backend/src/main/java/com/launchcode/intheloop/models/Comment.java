@@ -1,22 +1,21 @@
 package com.launchcode.intheloop.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name ="comments")
 @Getter
 @Setter
-@Entity
 public class Comment extends AbstractEntity {
 
-    @Size(min = 1, message = "Comment cannot be blank")
-    public String comment;
+    private String text;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
-
-    public Comment(){}
-
 }
