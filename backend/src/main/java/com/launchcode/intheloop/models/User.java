@@ -1,32 +1,28 @@
 package com.launchcode.intheloop.models;
 import java.time.LocalDate;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class User {
+public class User extends AbstractEntity {
 
-    private static int nextId = 1;
-    private final int id;
 
     @Setter
     private String username;
+
     @Setter
     private String email;
     private String password;
-    private final LocalDate dateRegistered;
+    private LocalDate dateRegistered = LocalDate.now();
 
-    public User(int id, LocalDate dateRegistered, String username, String email, String password) {
-        this.id = nextId;
-        this.dateRegistered = dateRegistered;
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        nextId++;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public LocalDate getDateRegistered() {
