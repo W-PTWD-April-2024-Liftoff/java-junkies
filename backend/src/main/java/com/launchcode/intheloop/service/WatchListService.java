@@ -5,6 +5,8 @@ import com.launchcode.intheloop.models.WatchList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class WatchListService {
 
@@ -15,13 +17,13 @@ public class WatchListService {
         return watchListRepository.findAll();
     }
 
-    public WatchList createWatchList (WatchList watchList) {
-            return watchListRepository.save(watchList);
+    //id doesn't work for some reason
+    public Optional<WatchList> getWatchListById (Long id) {
+        return watchListRepository.findById(id);
     }
 
-    //id doesn't work for some reason
-    public void deleteWatchList (Long id) {
-        watchListRepository.deleteById(id);
+    public WatchList createWatchList (WatchList watchList) {
+            return watchListRepository.save(watchList);
     }
 
 }
