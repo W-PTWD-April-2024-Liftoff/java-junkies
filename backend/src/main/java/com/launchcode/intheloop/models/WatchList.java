@@ -19,7 +19,7 @@ public class WatchList extends AbstractEntity{
     //may need a list here to store posts
     @JoinColumn(name = "watchlist_id")
     @OneToMany
-    private final List<Post> posts = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     public WatchList(){}
 }
