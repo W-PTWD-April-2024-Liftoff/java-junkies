@@ -17,16 +17,19 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public List<Post> getAllPosts() {
+    public Post createPost(Post post){
+        if(post.getContent() != null){
+            post.setContent(post.getContent());
+        }
+        return postRepository.save(post);
+    }
+
+    public Iterable<Post> getAllPosts() {
         return postRepository.findAll();
     }
 
     public Optional<Post> getPostById(Long id) {
         return postRepository.findById(id);
-    }
-
-    public Post createPost(Post post){
-        return postRepository.save(post);
     }
 
     public void deletePostById(Long id){
