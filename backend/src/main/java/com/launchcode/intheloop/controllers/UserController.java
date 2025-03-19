@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -25,14 +26,17 @@ public class UserController {
 
     @PostMapping("add")
     public ResponseEntity<String> createUser(@RequestBody User user) {
-        if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            return ResponseEntity.badRequest().body("Password cannot be null or empty!");
+        if (user.getPassword() == null || user.getVerifiedPassword() == null) {
+            return ResponseEntity.badRequest().body("Password fields cannot be null.");
+        }
+
+        if (!Objects.equals(user.getPassword(), user.getVerifiedPassword())) {
+            return ResponseEntity.status(400).body("Passwords do not match");
         }
 
         userRepository.save(user);
         return ResponseEntity.ok("User added successfully!");
     }
-
     @GetMapping("{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) {
         System.out.println("Fetching user with ID: " + id);  // Debug log
