@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 public class WatchList extends AbstractEntity{
 
+    public String title;
     public String savedPosts;
 
     //may need a list here to store posts
