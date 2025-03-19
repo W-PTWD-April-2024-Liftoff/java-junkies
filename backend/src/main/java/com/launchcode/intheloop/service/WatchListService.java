@@ -2,6 +2,7 @@ package com.launchcode.intheloop.service;
 
 import com.launchcode.intheloop.data.WatchListRepository;
 import com.launchcode.intheloop.models.WatchList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

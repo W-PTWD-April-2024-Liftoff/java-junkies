@@ -1,56 +1,85 @@
 package com.launchcode.intheloop.controllers;
 
-import com.launchcode.intheloop.data.CommentRepository;
-import com.launchcode.intheloop.data.PostRepository;
 import com.launchcode.intheloop.models.Comment;
-import jakarta.validation.Valid;
+import com.launchcode.intheloop.service.CommentService;
+import com.launchcode.intheloop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping("comments")
+@RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
-    CommentRepository commentRepository;
+    CommentService commentService;
 
     @Autowired
-    PostRepository postRepository;
+    PostService postService;
 
-    @RequestMapping("/")
-    public String index(Model model){
+    @GetMapping
+    public Iterable<Comment> getAllComments () {
+        return commentService.getAllComments();
+    }
 
-        model.addAttribute("title", "Comments");
-        model.addAttribute("comments", commentRepository.findAll());
+    @PostMapping
+    public Comment createComment(@RequestBody Comment comment) {
+        return commentService.createComment(comment);
+    }
 
-        return "comments/index";
+    @GetMapping("/{id}")
+    public Optional<Comment> getCommentById (@PathVariable Long id) {
+        return commentService.getCommentById(id);
+    }
+
+    @PostMapping("/{id}")
+    public void deleteCommentById(@PathVariable Long id) {
+         commentService.deleteCommentById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Comment updateComment (@PathVariable Long id, @RequestBody Comment updateComment) {
+        return commentService.updateCommentById(id, updateComment);
     }
 
 
-    //need to attach comment to post by id somehow?
-    @GetMapping("/new-comment")
-    public String newCommentForm(Model model) {
 
-        model.addAttribute("comment", new Comment());
-        model.addAttribute("posts", postRepository.findAll());
 
-        return "new-comment";
-    }
 
-    @PostMapping("/new-comment")
-    public String handleNewComment (Model model, @ModelAttribute @Valid Comment comment, Errors errors) {
-        if (errors.hasErrors()) {
-            model.addAttribute("comment", comment);
-            model.addAttribute("posts", postRepository.findAll());
-            return "new-comment";
-        }
 
-        commentRepository.save(comment);
-        model.addAttribute("comment", comment);
-        return "comment";
-
-    }
+//    @RequestMapping("/")
+//    public String index(Model model){
+//
+//        model.addAttribute("title", "Comments");
+//        model.addAttribute("comments", commentRepository.findAll());
+//
+//        return "comments/index";
+//    }
+//
+//
+//    //need to attach comment to post by id somehow?
+//    @GetMapping("/new-comment")
+//    public String newCommentForm(Model model) {
+//
+//        model.addAttribute("comment", new Comment());
+//        model.addAttribute("posts", postRepository.findAll());
+//
+//        return "new-comment";
+//    }
+//
+//    @PostMapping("/new-comment")
+//    public String handleNewComment (Model model, @ModelAttribute @Valid Comment comment, Errors errors) {
+//        if (errors.hasErrors()) {
+//            model.addAttribute("comment", comment);
+//            model.addAttribute("posts", postRepository.findAll());
+//            return "new-comment";
+//        }
+//
+//        commentRepository.save(comment);
+//        model.addAttribute("comment", comment);
+//        return "comment";
+//
+//    }
 
 }
