@@ -2,7 +2,6 @@ import { use, useState } from "react";
 
 export default function Auth0Form() {
     const [oneTimePasscode, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     return (
         <div>
