@@ -1,7 +1,9 @@
 import { use, useState } from "react";
+import Button from "./Button";
+import InputField from "./InputField";
 
 export default function Auth0Form() {
-    const [oneTimePasscode, setEmail] = useState('');
+    const [oneTimePasscode, setOneTimePasscode] = useState('');
 
     return (
         <div>
@@ -9,10 +11,18 @@ export default function Auth0Form() {
             <h2>Login</h2>
             <h3>Check your email for a 6-digit login code.</h3>
             <form>
-                <label>Enter the code below:
-                    <input type='text' value={oneTimePasscode}></input>
-                </label>
+                
+         <InputField 
+         type='text' 
+         value={oneTimePasscode} 
+         onChange={(event) => setOneTimePasscode(event.target.value)}
+         placeholder="Enter One-time Passcode">
+         </InputField>
+    
             </form>
+            <div>
+            <div><Button text="Log In" /></div>
+            </div>
         </div>
     )
 }
