@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css'
-import CreateUser from './components/CreateUser';
+import Register from './components/Register';
 import Login from './components/Login';
 import Auth0Login from './components/Auth0Login';
 
@@ -10,7 +10,7 @@ function App() {
   return (
     <>
         <div>
-        < CreateUser/>
+        < Register/>
         </div>
 
         <div>
