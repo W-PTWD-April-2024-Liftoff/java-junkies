@@ -11,29 +11,23 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@Setter
 public class User extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Getter
-    @Setter
     @NotBlank(message = "Username can not be empty")
     private String username;
 
-    @Getter
-    @Setter
+
     @NotBlank(message = "Email can not be empty")
     private String email;
 
-    @Getter
-    @Setter
+
     @NotBlank(message = "Password can not be empty")
     private String password;
 
-    @Getter
-    @Setter
+
     @NotBlank(message = "Password can not be empty")
     private String verifiedPassword;
 

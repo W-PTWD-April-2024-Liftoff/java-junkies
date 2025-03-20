@@ -1,6 +1,7 @@
 package com.launchcode.intheloop.controllers;
 import com.launchcode.intheloop.data.UserRepository;
 import com.launchcode.intheloop.models.User;
+import com.launchcode.intheloop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import java.util.stream.StreamSupport;
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
 
     @GetMapping("")
@@ -34,13 +35,13 @@ public class UserController {
             return ResponseEntity.status(400).body("Passwords do not match");
         }
 
-        userRepository.save(user);
+        userService.save(user);
         return ResponseEntity.ok("User added successfully!");
     }
     @GetMapping("{id}")
-    public ResponseEntity<?> getUser(@PathVariable Long id) {
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
         System.out.println("Fetching user with ID: " + id);  // Debug log
-        Optional<User> user = userRepository.findById(id);
+        Optional<User> user = userService.findUserById(id);
 
         if (user.isPresent()) {
             return ResponseEntity.ok(user.get());
@@ -51,7 +52,7 @@ public class UserController {
 
     @GetMapping("all")
     public ResponseEntity<Iterable<User>> getAllUsers() {
-        Iterable<User> users = userRepository.findAll();
+        Iterable<User> users = userService.getAllUsers();
         if (StreamSupport.stream(users.spliterator(), false).count() == 0) {
             return ResponseEntity.status(404).body(users);
         }
