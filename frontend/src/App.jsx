@@ -1,12 +1,24 @@
+import { useState } from 'react';
 import './App.css'
-import Hello from "./components/Hello";
+import Register from './components/Register';
+import Login from './components/Login';
+import Auth0Login from './components/Auth0Login';
+
 
 function App() {
 
   return (
     <>
         <div>
-          <Hello />
+        < Register/>
+        </div>
+
+        <div>
+        < Login/>
+        </div>
+
+        <div>
+        < Auth0Login/>
         </div>
     </>
   )
