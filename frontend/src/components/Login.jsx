@@ -5,6 +5,10 @@ import InputField from "./InputField";
 export default function loginForm() {
     const [email, setEmail] = useState('');
     // const [password, setPassword] = useState('');
+    // const {
+    //     //     isAuthenticated,
+    //     //     loginWithRedirect,
+    //     //   } = useAuth0();
 
     return (
         <div>
@@ -20,6 +24,9 @@ export default function loginForm() {
 
                 <div><Button text="Log In with password" /></div>
                 <div><Button text="Log In with One-Time Passcode" /></div>
+                {/* <div>
+                    <Button text="Log In" onClick={loginWithRedirect} />
+                </div> */}
 
                 {/* <label>Enter your password:
                     <input type='password' value={password}></input>
