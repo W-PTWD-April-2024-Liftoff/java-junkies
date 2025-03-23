@@ -3,6 +3,9 @@ import './App.css'
 import Register from './components/Register';
 import Login from './components/Login';
 import Auth0Login from './components/Auth0Login';
+import CreatePost from './components/CreatePost';
+import PostList from './components/PostList';
+import Discussion from './components/Discussion';
 
 
 function App() {
@@ -19,6 +22,10 @@ function App() {
 
         <div>
         < Auth0Login/>
+        </div>
+
+        <div>
+          < Discussion />
         </div>
     </>
   )

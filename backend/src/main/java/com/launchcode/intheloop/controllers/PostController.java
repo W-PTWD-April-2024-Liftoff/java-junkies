@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5179")
 @RequestMapping("/posts")
 public class PostController {
 
@@ -19,7 +20,7 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @PostMapping
+    @PostMapping()
     public Post createPost(@RequestBody Post post) {
         return postService.createPost(post);
     }
