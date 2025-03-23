@@ -20,10 +20,10 @@ public class WatchListController {
         return watchListService.getAllWatchList();
     }
 
-    @PostMapping
-    public WatchList createWatchList(@RequestBody WatchList watchList) {
-        return watchListService.createWatchList(watchList);
-    }
+//    @PostMapping
+//    public WatchList createWatchList(@RequestBody WatchList watchList) {
+//        return watchListService.createWatchList(watchList);
+//    }
 
     @GetMapping("/{id}")
     public Optional<WatchList> getWatchListById (@PathVariable Long id) {
@@ -36,7 +36,7 @@ public class WatchListController {
     }
 
     @PutMapping("/{id}")
-    public WatchList updateWatchListById (@PathVariable Long id, @RequestBody WatchList updateWatchlist) {
+    public WatchList updateWatchList (@PathVariable Long id, @RequestBody WatchList updateWatchlist) {
         return watchListService.updateWatchListById(id, updateWatchlist);
     }
 }

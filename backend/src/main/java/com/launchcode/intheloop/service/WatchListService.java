@@ -16,12 +16,12 @@ public class WatchListService {
     @Autowired
     private WatchListRepository watchListRepository;
 
-    public WatchList createWatchList(WatchList watchList){
-        if(watchList.getSavedPosts() != null){
-            watchList.setSavedPosts(watchList.getSavedPosts());
-        }
-        return watchListRepository.save(watchList);
-    }
+//    public WatchList createWatchList(WatchList watchList){
+//        if(watchList.getSavedPosts() != null){
+//            watchList.setSavedPosts(watchList.getSavedPosts());
+//        }
+//        return watchListRepository.save(watchList);
+//    }
 
     public Iterable<WatchList> getAllWatchList() {
         return watchListRepository.findAll();
@@ -48,6 +48,7 @@ public class WatchListService {
         if(results.isEmpty()) {
             throw new NoSuchElementException("No watchlist with id: " + id);
         }
+
         WatchList watchList = results.get();
         watchList.setTitle(updatedWatchlist.getTitle());
         watchList.setSavedPosts(updatedWatchlist.getSavedPosts());
