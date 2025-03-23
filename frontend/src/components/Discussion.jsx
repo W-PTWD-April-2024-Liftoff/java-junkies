@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
+import EditPost from "./EditPost";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
+    const [currentPost, setCurrentPost] = useState(null);
 
     useEffect(() => {
         fetchPosts();
@@ -27,12 +29,18 @@ const Discussion = () => {
         <div>
             <h1>Discussion Board</h1>
             <CreatePost onPostCreated={fetchPosts} />
+            {currentPost ? <EditPost post={currentPost} onUpdate={() => {setCurrentPost(null)}} onCancel={() => {}}/> : null}
             <div className="post-list">
                 {posts.map((post) => (
-                    <div key={post.id} className="post">
-                        <h3>{post.title}</h3>
-                        <p>{post.content}</p>
-                    </div>
+                    <>
+                        <div key={post.id} className="post">
+                            <h3>{post.title}</h3>
+                            <p>{post.content}</p>
+                            <button onClick={() => {
+                                setCurrentPost(post);
+                            }}>Edit</button>
+                        </div>
+                    </>
                 ))}
             </div>
         </div>
