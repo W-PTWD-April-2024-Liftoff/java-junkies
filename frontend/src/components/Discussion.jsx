@@ -43,7 +43,6 @@ const Discussion = () => {
         };
 
     return (
-
         <div>
         <h1>Discussion Board</h1>
         <CreatePost onPostCreated={fetchPosts} />
@@ -56,7 +55,7 @@ const Discussion = () => {
                         <>
                             <h3>{post.title}</h3>
                             <p>{post.content}</p>
-                            <p><strong>Tags:</strong> {post.tags.join(", ")}</p> {/* Display tags */}
+                            <p><strong>Tags:</strong> {post.tags.map(tag => tag.name).join()}</p>  
                             <button onClick={() => setEditingPost(post.id)}>Edit</button>
                             <button onClick={() => handleDelete(post.id)}>Delete</button>
                         </>

@@ -7,11 +7,11 @@ const CreatePost = ({onPostCreated}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        const tagsObjectArray = tags.split(",").map(tag => ({name: tag.trim()}))
         const postData = {
             title, 
             content,
-            tags: tags.split(",").map(tag => tag.trim())
+            tags: tagsObjectArray
          };
 
         try {

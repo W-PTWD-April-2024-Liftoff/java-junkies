@@ -25,4 +25,6 @@ public class Post extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags;
+//    @ElementCollection
+//    private List<String> tags;
 }
