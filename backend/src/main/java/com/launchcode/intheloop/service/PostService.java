@@ -18,9 +18,9 @@ public class PostService {
     private PostRepository postRepository;
 
     public Post createPost(Post post){
-        if(post.getContent() != null){
-            post.setContent(post.getContent());
-        }
+//        if(post.getContent() != null){
+//            post.setContent(post.getContent());
+//        }
         return postRepository.save(post);
     }
 

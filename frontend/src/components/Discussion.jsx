@@ -56,6 +56,7 @@ const Discussion = () => {
                         <>
                             <h3>{post.title}</h3>
                             <p>{post.content}</p>
+                            <p><strong>Tags:</strong> {post.tags.join(", ")}</p> {/* Display tags */}
                             <button onClick={() => setEditingPost(post.id)}>Edit</button>
                             <button onClick={() => handleDelete(post.id)}>Delete</button>
                         </>

@@ -46,7 +46,7 @@ public class TagService {
         }
         Tag tag = results.get();
         tag.setName(updatedTag.getName());
-        tag.setPosts(updatedTag.getPosts());
+//        tag.setPosts(updatedTag.getPosts());
 
         return tagRepository.save(tag);
     }
