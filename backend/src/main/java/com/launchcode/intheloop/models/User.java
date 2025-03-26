@@ -12,8 +12,8 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
 @Setter
+@Getter
 public class User extends AbstractEntity {
 
 
@@ -56,4 +56,5 @@ public class User extends AbstractEntity {
         this.dateRegistered = dateRegistered;
         this.profilePictureUpload = profilePictureUpload;
     }
+
 }

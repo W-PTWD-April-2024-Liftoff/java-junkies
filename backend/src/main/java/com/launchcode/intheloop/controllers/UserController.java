@@ -1,13 +1,14 @@
 package com.launchcode.intheloop.controllers;
-import com.launchcode.intheloop.data.UserRepository;
 import com.launchcode.intheloop.models.User;
 import com.launchcode.intheloop.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -40,7 +41,7 @@ public class UserController {
     }
     @GetMapping("{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
-        System.out.println("Fetching user with ID: " + id);  // Debug log
+        System.out.println("Fetching user with ID: " + id);
         Optional<User> user = userService.findUserById(id);
 
         if (user.isPresent()) {
@@ -58,4 +59,55 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
-}
+
+    @GetMapping("profile")
+    public String displayProfile (){return "profile";}
+
+    @PostMapping("update-profile")
+    public ResponseEntity<?> updateProfile(@RequestBody User request) {
+        Optional<User> user = userService.findUserById(request.getId());
+
+        if(user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        user.get().setEmail(request.getEmail());
+        user.get().setUsername(request.getUsername());
+        user.get().setName(request.getName());
+        user.get().setBio(request.getBio());
+
+        userService.updateUser(user.orElse(null));
+
+        return ResponseEntity.ok("User profile updated successfully");
+    }
+
+    @PostMapping("profile")
+    public ResponseEntity<?> uploadProfilePicture(@RequestBody User updatedUser, @RequestParam("profilePicture") MultipartFile file, HttpServletRequest request){
+        try{
+            String uploadDir = request.getServletContext().getRealPath("/") + "pics" + java.io.File.separator + "image.jpg";
+            String filePath = uploadDir + file.getOriginalFilename();
+
+            if(userService.deleteFile(filePath)) {
+                boolean saved = userService.saveFile(file.getInputStream(), filePath);
+                if (saved) {
+                    System.out.println("Profile picture updated");
+                    updatedUser.setProfilePictureUpload(file.getOriginalFilename());
+                } else {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save new profile picture");
+                }
+            } else {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete existing profile picture");
+                }
+
+            userService.updateUser(updatedUser);
+
+            return ResponseEntity.ok("Profile updated successfully");
+
+            } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing file");
+        }
+        }
+
+
+    }
