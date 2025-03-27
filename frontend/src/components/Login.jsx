@@ -1,21 +1,36 @@
 import { use, useState } from "react";
+import Button from "./Button";
+import InputField from "./InputField";
 
 export default function loginForm() {
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    // const [password, setPassword] = useState('');
+    // const {
+    //     //     isAuthenticated,
+    //     //     loginWithRedirect,
+    //     //   } = useAuth0();
 
     return (
         <div>
             <h1>In The Loop</h1>
             <h2>Login</h2>
             <form>
-                <label>Enter your email:
-                    <input type='text' value={email}></input>
-                </label>
+            <InputField 
+         type='email' 
+         value={email} 
+         onChange={(event) => setEmail(event.target.value)}
+         placeholder="Enter your email">
+         </InputField>
 
-                <label>Enter your password:
-                    <input type='text' value={password}></input>
-                </label>
+                <div><Button text="Log In with password" /></div>
+                <div><Button text="Log In with One-Time Passcode" /></div>
+                {/* <div>
+                    <Button text="Log In" onClick={loginWithRedirect} />
+                </div> */}
+
+                {/* <label>Enter your password:
+                    <input type='password' value={password}></input>
+                </label> */}
             </form>
         </div>
     )
