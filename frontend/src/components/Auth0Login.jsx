@@ -5,6 +5,7 @@ import InputField from "./InputField";
 export default function Auth0Form() {
     const [oneTimePasscode, setOneTimePasscode] = useState('');
 
+
     return (
         <div>
             <h1>In The Loop</h1>
@@ -23,6 +24,5 @@ export default function Auth0Form() {
             <div>
             <div><Button text="Log In" /></div>
             </div>
-        </div>
     )
 }
