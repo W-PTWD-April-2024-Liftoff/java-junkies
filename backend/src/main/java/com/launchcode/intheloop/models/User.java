@@ -57,4 +57,5 @@ public class User extends AbstractEntity {
         this.profilePictureUpload = profilePictureUpload;
     }
 
+
 }

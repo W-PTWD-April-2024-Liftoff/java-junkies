@@ -1,5 +1,6 @@
 import './App.css'
 import Hello from "./components/Hello";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
     <>
         <div>
           <Hello />
+          <ProfilePage />
         </div>
     </>
   )
