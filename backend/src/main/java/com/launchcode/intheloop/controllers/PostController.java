@@ -1,6 +1,7 @@
 package com.launchcode.intheloop.controllers;
 
 import com.launchcode.intheloop.models.Post;
+import com.launchcode.intheloop.models.Rating;
 import com.launchcode.intheloop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,13 @@ public class PostController {
         return postService.getPostById(id);
     }
 
+    @PostMapping("/{id}/rate")
+    public Rating addRating(@PathVariable Long id, @RequestParam int rating) {
+        if (rating < 1 || rating > 5) {
+            throw new IllegalArgumentException("Rating must be between 1 and 5");
+        }
+        return postService.addRating(id, rating);
+    }
     @DeleteMapping("/{id}")
     public void deletePostById(@PathVariable Long id) {
          postService.deletePostById(id);

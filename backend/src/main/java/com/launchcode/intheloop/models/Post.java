@@ -18,6 +18,9 @@ public class Post extends AbstractEntity {
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rating> ratings;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "post_tags",
