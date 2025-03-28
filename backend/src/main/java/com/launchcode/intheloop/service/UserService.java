@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -32,8 +33,21 @@ public class UserService {
     public void save(User user) {
     }
 
-    public void updateUser(User user){
-        userRepository.save(user);
+    public User updateUserById(Long id, User updatedUser){
+        Optional<User> results = userRepository.findById(id);
+
+        if(results.isEmpty()){
+            throw new NoSuchElementException("User not found with id "+ id);
+        }
+
+        User user = results.get();
+
+        user.setEmail(updatedUser.getEmail());
+        user.setUsername(updatedUser.getUsername());
+        user.setName(updatedUser.getName());
+        user.setBio(updatedUser.getBio());
+
+        return userRepository.save(user);
     }
 
     public boolean deleteFile(String path){

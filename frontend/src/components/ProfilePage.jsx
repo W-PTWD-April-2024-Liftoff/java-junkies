@@ -12,7 +12,7 @@ import '../App.css'
 
 
     useEffect(() => {
-      fetch('http://localhost:8080/user/profile')
+      fetch('http://localhost:8080/user/{id}')
         .then(async (response) => {
           if (!response.ok) {
                const text = await response.text();
@@ -45,26 +45,26 @@ import '../App.css'
             bio
             };
 
-        fetch('http://localhost:8080/user/profile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                },
-            body: JSON.stringify(updatedUser),
-            })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to update profile');
-                }
-            return response.text();
-            })
-        .then(msg => {
-            alert(msg);
-            })
-        .catch(err => {
-            alert('Error: ' + err.message);
-            });
-        };
+//         fetch('http://localhost:8080/user/{id}/update-profile', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 },
+//             body: JSON.stringify(updatedUser),
+//             })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Failed to update profile');
+//                 }
+//             return response.text();
+//             })
+//         .then(msg => {
+//             alert(msg);
+//             })
+//         .catch(err => {
+//             alert('Error: ' + err.message);
+//             });
+//         };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error loading profile: {error.message}</p>;
@@ -110,8 +110,6 @@ import '../App.css'
 
                         </form>
                         </div>
-  );
+  )
 
-};
-
-export default ProfilePage;
+}
