@@ -1,6 +1,5 @@
 package com.launchcode.intheloop.controllers;
 
-import com.launchcode.intheloop.models.Comment;
 import com.launchcode.intheloop.models.WatchList;
 import com.launchcode.intheloop.service.WatchListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class WatchListController {
         return watchListService.getWatchListById(id);
     }
 
-    @PostMapping("/{id}")
+    @DeleteMapping("/{id}")
     public void deleteWatchListById (@PathVariable Long id) {
         watchListService.deleteWatchListById(id);
     }
