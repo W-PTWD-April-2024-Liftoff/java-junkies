@@ -6,12 +6,16 @@ import Auth0Login from './components/Auth0Login';
 import CreatePost from './components/CreatePost';
 import PostList from './components/PostList';
 import Discussion from './components/Discussion';
+import { Navbar } from './components/Navbar';
+import {NavbarResults} from './components/NavbarResultsList';
+// import { ShareProvider } from './components/WatchList';
 
 
 function App() {
 
   return (
-    <>
+    <div className='App'>
+
         <div>
         < Register/>
         </div>
@@ -27,8 +31,16 @@ function App() {
         <div>
           < Discussion />
         </div>
-    </>
-  )
+
+        const [results, setResults] = useState ([]);
+
+        <div className = "searchBarContainer">
+            <Navbar setResults = {setResults} />
+            <NavbarResults results = {results} />
+            </div>
+
+    </div>
+  );
 }
 
 export default App
