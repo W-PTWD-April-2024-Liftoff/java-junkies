@@ -5,7 +5,7 @@ const SharedContext = createContext();
 export const useShareContext = () => useContext(SharedContext);
 
 //loads the watchlist from local storage, will probably change to sql database later
-//useState creates an intial state
+//useState creates an initial state
 
 export const ShareProvider = ({ children }) => {
     const [watchListPosts, setWatchListPosts] = useState(() => {
