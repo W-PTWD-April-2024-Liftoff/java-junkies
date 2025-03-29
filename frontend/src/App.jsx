@@ -3,24 +3,15 @@ import './App.css'
 import Register from './components/Register';
 import Login from './components/Login';
 import Auth0Login from './components/Auth0Login';
-import { ShareProvider } from './components/WatchList';
+import CreatePost from './components/CreatePost';
+import PostList from './components/PostList';
+import Discussion from './components/Discussion';
+
 
 function App() {
 
   return (
     <>
-{/*     <Router> */}
-
-{/*     <UserProvider> */}
-{/*         <ShareProvider> */}
-
-{/*             <Routes> */}
-
-{/*             <Routes> */}
-
-{/*         </ShareProvider> */}
-{/*     </UserProvider> */}
-
         <div>
         < Register/>
         </div>
@@ -31,6 +22,10 @@ function App() {
 
         <div>
         < Auth0Login/>
+        </div>
+
+        <div>
+          < Discussion />
         </div>
     </>
   )

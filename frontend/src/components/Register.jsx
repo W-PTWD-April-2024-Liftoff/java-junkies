@@ -1,4 +1,6 @@
 import { use, useState } from "react";
+import Button from "./Button";
+import InputField from "./InputField";
 
 export default function registrationForm() {
     const [email, setEmail] = useState('');
@@ -6,25 +8,35 @@ export default function registrationForm() {
     const [verifiedPassword, setVerifiedPassword] = useState('');
 
     const handleChange = (event) => {
-        setNotes(event.target.value);
-     }
+        setEmail(event.target.value);
+    }
 
     return (
         <div>
             <h1>In the Loop</h1>
             <h2>Create an Account</h2>
             <form>
-                <label>Enter your email:
-                    <input type='text' value={email} onChange={handleChange}></input>
-                </label>
+                <InputField
+                    type='email'
+                    value={email}
+                    onChange={handleChange}
+                    placeholder="Enter your email">
+                </InputField>
 
-                <label>Enter a password:
-                    <input type='text' value={password} onChange={handleChange}></input>
-                </label>
+                <InputField type='password'
+                    value={password}
+                    onChange={handleChange}
+                    placeholder="Enter a password">
+                </InputField>
 
-                <label>Verify password:
-                    <input type='text' value={verifiedPassword} onChange={handleChange}></input>
-                </label>
+
+                <InputField type='password'
+                    value={verifiedPassword}
+                    onChange={handleChange}
+                    placeholder="Re-enter password">
+                </InputField>
+
+                <div><div><Button text="Register" /></div></div>
             </form>
         </div>
     )
