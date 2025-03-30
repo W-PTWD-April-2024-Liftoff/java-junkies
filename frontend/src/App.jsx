@@ -7,7 +7,7 @@ import CreatePost from './components/CreatePost';
 import PostList from './components/PostList';
 import Discussion from './components/Discussion';
 import { Navbar } from './components/Navbar';
-import {NavbarResults} from './components/NavbarResultsList';
+import { NavbarResultsList } from './components/NavbarResultsList';
 // import { ShareProvider } from './components/WatchList';
 
 
@@ -36,7 +36,7 @@ function App() {
 
         <div className = "searchBarContainer">
             <Navbar setResults = {setResults} />
-            <NavbarResults results = {results} />
+            <NavbarResultsList results = {results} />
             </div>
 
     </div>
