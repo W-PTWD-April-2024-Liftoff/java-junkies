@@ -69,7 +69,8 @@ public class PostService {
             Rating rating = new Rating();
             rating.setPost(post);
             rating.setRating(ratingValue);
-            return ratingRepository.save(rating);
+            ratingRepository.save(rating);
+            return rating;
         } else {
             throw new RuntimeException("Post not found");
         }
