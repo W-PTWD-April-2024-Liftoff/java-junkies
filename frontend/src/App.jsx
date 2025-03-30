@@ -12,9 +12,15 @@ import { NavbarResultsList } from './components/NavbarResultsList';
 
 
 function App() {
+  const [results, setResults] = useState([]);
 
   return (
     <div className='App'>
+
+<div className = "searchBarContainer">
+            <Navbar setResults = {setResults} />
+            <NavbarResultsList results = {results} />
+            </div>
 
         <div>
         < Register/>
@@ -33,11 +39,6 @@ function App() {
         </div>
 
         const [results, setResults] = useState ([]);
-
-        <div className = "searchBarContainer">
-            <Navbar setResults = {setResults} />
-            <NavbarResultsList results = {results} />
-            </div>
 
     </div>
   );
