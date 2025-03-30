@@ -2,7 +2,7 @@ import React, {useState} from "react";
 
 import {FaSearch} from "react-icons/fa";
 import "./Navbar.css";
-import { json } from "stream/consumers";
+// import { json } from "stream/consumers";
 
 export const Navbar = ({setResults}) => {
     const [input, setInput] = useState("");
