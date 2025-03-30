@@ -3,11 +3,16 @@ import React, {useState, useEffect} from "react";
 const CreatePost = ({onPostCreated}) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [tags, setTags] = useState ("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const postData = {title, content}
+        const tagsObjectArray = tags.split(",").map(tag => ({name: tag.trim()}))
+        const postData = {
+            title, 
+            content,
+            tags: tagsObjectArray
+         };
 
         try {
             const response = await fetch("http://localhost:8080/posts", {
@@ -27,6 +32,7 @@ const CreatePost = ({onPostCreated}) => {
             onPostCreated();
             setTitle("");
             setContent("");
+            setTags("");
         } catch (error) {
             console.error("Error creating post:", error);
         }
@@ -36,6 +42,7 @@ const CreatePost = ({onPostCreated}) => {
         <form onSubmit = {handleSubmit}>
             <input type = "text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
             <textarea placeholder="Content" value={content} onChange={(e) => setContent(e.target.value)} required />
+            <input type="text" placeholder="Tags (coma-separated)" value={tags} onChange={(e) => setTags(e.target.value)} /> 
             <button type = "submit"> Create Post</button>  
         </form>
     );

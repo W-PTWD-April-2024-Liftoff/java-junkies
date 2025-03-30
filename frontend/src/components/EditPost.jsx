@@ -3,10 +3,15 @@ import { useState } from "react";
 const EditPost = ({post, onUpdate, onCancel}) => {
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
+    const [tags, setTags] = useState(post.tags.join(", "));
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-        const updatedPost = {title, content};
+        const updatedPost = {
+            title,
+            content,
+            tags: tags.split(",").map(tag => tag.trim())
+        };
 
         try {
             const response = await fetch(`http://localhost:8080/posts/${post.id}`, {
@@ -30,6 +35,7 @@ const EditPost = ({post, onUpdate, onCancel}) => {
         <form onSubmit={handleUpdate} className="edit-post-form">
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
             <textarea value={content} onChange={(e) => setContent(e.target.value)} required />
+            <input type="text" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Tags (comma-separated)" />
             <button type="submit">Update Post</button>
             <button type="button" onClick={onCancel}>Cancel</button>
         </form>
