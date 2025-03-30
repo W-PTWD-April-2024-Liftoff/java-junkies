@@ -14,14 +14,12 @@ import java.util.List;
 @Entity
 public class WatchList extends AbstractEntity{
 
-    //need to ask about annotations
-    //could be integer
     public String savedPosts;
 
     //may need a list here to store posts
     @JoinColumn(name = "watchlist_id")
     @OneToMany
-    private final List<Post> posts = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     public WatchList(){}
 }
