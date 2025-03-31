@@ -1,17 +1,19 @@
 package com.launchcode.intheloop.service;
 
 import com.launchcode.intheloop.data.UserRepository;
-import com.launchcode.intheloop.models.Post;
 import com.launchcode.intheloop.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -30,52 +32,38 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void save(User user) {
+    public User save(User updateUser) {
+        return null;
     }
 
-    public User updateUserById(Long id, User updatedUser){
-        Optional<User> results = userRepository.findById(id);
+    public void updateUser(User user) {
+    }
 
-        if(results.isEmpty()){
-            throw new NoSuchElementException("User not found with id "+ id);
+    public String saveImageWithUUID(MultipartFile file, String uploadDir) throws IOException {
+        Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
         }
 
-        User user = results.get();
+        String originalName = file.getOriginalFilename();
+        String extension = "";
 
-        user.setEmail(updatedUser.getEmail());
-        user.setUsername(updatedUser.getUsername());
-        user.setName(updatedUser.getName());
-        user.setBio(updatedUser.getBio());
-
-        return userRepository.save(user);
-    }
-
-    public boolean deleteFile(String path){
-        boolean f = false;
-        try {
-            File file = new File(path);
-            f = file.delete();
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return f;
-    }
-    public static boolean saveFile(InputStream is, String path){
-        boolean f = false;
-
-        try{
-            byte b[] = new byte[is.available()];
-            is.read(b);
-            FileOutputStream fos = new FileOutputStream(path);
-            fos.write(b);
-            fos.flush();
-            fos.close();
-            f = true;
-        }catch (Exception e) {
-            e.printStackTrace();
+        if (originalName != null && originalName.contains(".")) {
+            extension = originalName.substring(originalName.lastIndexOf("."));
         }
 
-        return f;
+        String uuidName = UUID.randomUUID().toString() + extension;
+
+        Path filePath = uploadPath.resolve(uuidName);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        return uuidName;
     }
+
+    public boolean existsById(Long id) {
+        return false;
+    }
+
 }
+
