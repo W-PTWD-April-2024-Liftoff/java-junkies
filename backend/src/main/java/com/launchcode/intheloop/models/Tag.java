@@ -14,8 +14,8 @@ public class Tag extends AbstractEntity {
 
     private String name;
 
-    @ManyToMany(mappedBy = "tags")
-    private List<Post> posts;
+//    @ManyToMany(mappedBy = "tags")
+//    private List<Post> posts;
 
     public Tag(){}
 }
