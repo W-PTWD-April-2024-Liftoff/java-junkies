@@ -13,14 +13,16 @@ export default function loginForm() {
     return (
         <div>
             <h1>In The Loop</h1>
-            <h2>Login</h2>
+            <h2>Log In</h2>
             <form>
-            <InputField 
-         type='email' 
-         value={email} 
-         onChange={(event) => setEmail(event.target.value)}
-         placeholder="Enter your email">
-         </InputField>
+                <div>
+                    <InputField
+                        type='email'
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        placeholder="Enter your email">
+                    </InputField>
+                </div>
 
                 <div><Button text="Log In with password" /></div>
                 <div><Button text="Log In with One-Time Passcode" /></div>

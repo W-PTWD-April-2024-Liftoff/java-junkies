@@ -16,27 +16,34 @@ export default function registrationForm() {
             <h1>In the Loop</h1>
             <h2>Create an Account</h2>
             <form>
-                <InputField
-                    type='email'
-                    value={email}
-                    onChange={handleChange}
-                    placeholder="Enter your email">
-                </InputField>
+                <div>
+                    <InputField
+                        type='email'
+                        value={email}
+                        onChange={handleChange}
+                        placeholder="Enter your email">
+                    </InputField>
+                </div>
 
-                <InputField type='password'
-                    value={password}
-                    onChange={handleChange}
-                    placeholder="Enter a password">
-                </InputField>
+                <div>
+                    <InputField type='password'
+                        value={password}
+                        onChange={handleChange}
+                        placeholder="Enter a password">
+                    </InputField>
+                </div>
 
+                <div>
+                    <InputField type='password'
+                        value={verifiedPassword}
+                        onChange={handleChange}
+                        placeholder="Re-enter password">
+                    </InputField>
+                </div>
 
-                <InputField type='password'
-                    value={verifiedPassword}
-                    onChange={handleChange}
-                    placeholder="Re-enter password">
-                </InputField>
-
-                <div><div><Button text="Register" /></div></div>
+                <div>
+                    <Button text="Register" />
+                </div>
             </form>
         </div>
     )
