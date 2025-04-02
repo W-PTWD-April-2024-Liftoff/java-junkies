@@ -19,7 +19,7 @@ function App() {
 
 <div className = "searchBarContainer">
             <Navbar setResults = {setResults} />
-            <NavbarResultsList results = {results} />
+            {results && results.length > 0 && <NavbarResultsList results={results} />}
             </div>
 
         <div>
