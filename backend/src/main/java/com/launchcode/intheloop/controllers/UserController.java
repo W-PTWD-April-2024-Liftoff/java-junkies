@@ -14,6 +14,7 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("user")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
     @Autowired
@@ -58,4 +59,7 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
+
+
+
 }
