@@ -2,14 +2,13 @@ import { useState } from "react";
 import Button from "./Button";
 import InputField from "./InputField";
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from 'axios';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const { loginWithRedirect } = useAuth0();
-    const passwordLogin = (email) => {
+    // const passwordLogin = (email) => {
         
-    }
+    // }
 
     return (
         <div>
@@ -27,8 +26,8 @@ export default function LoginForm() {
 
                 <div><Button 
                 text="Log In With Password" 
-                onClick={() => passwordLogin(email)
-                }
+                // onClick={() => passwordLogin(email)
+                // }
                 />
                 </div>
 
