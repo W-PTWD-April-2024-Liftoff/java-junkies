@@ -1,48 +1,97 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import InputField from "./InputField";
 
-export default function registrationForm() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [verifiedPassword, setVerifiedPassword] = useState('');
+export default function RegistrationForm() {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        verifiedPassword: '',
+    });
 
     const handleChange = (event) => {
-        setEmail(event.target.value);
-    }
+        const {name, value} = event.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if(formData.password !== formData.verifiedPassword) {
+            alert('Passwords must match.');
+            return;
+        };
+
+        const userData = {
+            email: formData.email,
+            password: formData.password,
+            verifiedPassword: formData.verifiedPassword
+        };
+
+        try {
+            const response = await fetch('http://localhost:8080/user/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+            });
+
+            if(response.ok) {
+                alert(`${formData.email} was registered successfully!`)
+            } else {
+                alert('Error: Something went wrong')
+            }
+        } catch(error) {
+            console.error('Error:', error);
+            alert('Something went wrong. Try again.')
+        }
+        };
+    
 
     return (
         <div>
             <h1>In the Loop</h1>
             <h2>Create an Account</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <InputField
                         type='email'
-                        value={email}
+                        name='email'
+                        value={formData.email}
                         onChange={handleChange}
                         placeholder="Enter your email">
                     </InputField>
                 </div>
 
                 <div>
-                    <InputField type='password'
-                        value={password}
+                    <InputField 
+                        type='password'
+                        name='password'
+                        value={formData.password}
                         onChange={handleChange}
                         placeholder="Enter a password">
                     </InputField>
                 </div>
 
                 <div>
-                    <InputField type='password'
-                        value={verifiedPassword}
+                    <InputField 
+                        type='password'
+                        name='verifiedPassword'
+                        value={formData.verifiedPassword}
                         onChange={handleChange}
                         placeholder="Re-enter password">
                     </InputField>
                 </div>
 
                 <div>
-                    <Button text="Register" />
+                    <Button 
+                    text="Register" 
+                    type="submit"
+                    />
                 </div>
             </form>
         </div>

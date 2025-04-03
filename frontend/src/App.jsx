@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css'
+import { useAuth0 } from '@auth0/auth0-react'; 
 import Register from './components/Register';
 import Login from './components/Login';
 import Auth0Login from './components/Auth0Login';
@@ -20,9 +21,9 @@ function App() {
         < Login/>
         </div>
 
-        <div>
+        {/* <div>
         < Auth0Login/>
-        </div>
+        </div> */}
 
         <div>
           < Discussion />

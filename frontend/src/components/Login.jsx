@@ -1,14 +1,15 @@
-import { use, useState } from "react";
+import { useState } from "react";
 import Button from "./Button";
 import InputField from "./InputField";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from 'axios';
 
-export default function loginForm() {
+export default function LoginForm() {
     const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const {
-    //     //     isAuthenticated,
-    //     //     loginWithRedirect,
-    //     //   } = useAuth0();
+    const { loginWithRedirect } = useAuth0();
+    const passwordLogin = (email) => {
+        
+    }
 
     return (
         <div>
@@ -24,15 +25,26 @@ export default function loginForm() {
                     </InputField>
                 </div>
 
-                <div><Button text="Log In with password" /></div>
-                <div><Button text="Log In with One-Time Passcode" /></div>
-                {/* <div>
-                    <Button text="Log In" onClick={loginWithRedirect} />
-                </div> */}
+                <div><Button 
+                text="Log In With Password" 
+                onClick={() => passwordLogin(email)
+                }
+                />
+                </div>
 
-                {/* <label>Enter your password:
-                    <input type='password' value={password}></input>
-                </label> */}
+                <div><Button
+                    text="Log In with One-Time Passcode"
+                    onClick={() =>
+                        loginWithRedirect({
+                            authorizationParams: {
+                                screen_hint: "login"
+                            },
+                            login_hint: email,
+                        })
+                    }
+                />
+                </div>
+
             </form>
         </div>
     )
