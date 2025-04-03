@@ -6,6 +6,7 @@ import Auth0Login from './components/Auth0Login';
 import CreatePost from './components/CreatePost';
 import PostList from './components/PostList';
 import Discussion from './components/Discussion';
+import EditPost from './components/EditPost';
 
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
         </div>
 
         <div>
-          < Discussion />
+          <Discussion/>
+      
         </div>
     </>
   )
