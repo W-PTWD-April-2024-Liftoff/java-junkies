@@ -60,7 +60,7 @@ public class UserController {
         return ResponseEntity.ok("User added successfully!");
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         System.out.println("Fetching user with ID: " + id);
         Optional<User> user = userService.findUserById(id);
@@ -105,17 +105,20 @@ public class UserController {
 
     @PostMapping("update-profile")
     public ResponseEntity<?> updateProfile(@RequestBody User updatedUser) {
-        if (updatedUser.getId() == null) {
-            return ResponseEntity.badRequest().body("User ID must not be null");
-        }
+
+        User user;
+
+        if (updatedUser.getId() != null) {
             Optional<User> result = userService.findUserById(updatedUser.getId());
 
             if (result.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
 
-            User user = result.get();
-
+            user = result.get();
+        } else {
+            user = new User();
+        }
             user.setEmail(updatedUser.getEmail());
             user.setUsername(updatedUser.getUsername());
             user.setName(updatedUser.getName());
