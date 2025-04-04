@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("user")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -22,8 +22,8 @@ public class UserController {
 
 
     @GetMapping("")
-    public String displayAddUserForm() {
-        return "user";
+    public ResponseEntity<?> displayAddUserForm() {
+        return ResponseEntity.ok("In The loop is up");
     }
 
     @PostMapping("add")

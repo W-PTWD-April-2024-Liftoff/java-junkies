@@ -10,6 +10,7 @@ export default function LoginForm() {
         
     // }
 
+
     return (
         <div>
             <h1>In The Loop</h1>
@@ -18,6 +19,7 @@ export default function LoginForm() {
                 <div>
                     <InputField
                         type='email'
+                        name='email'
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
                         placeholder="Enter your email">
@@ -33,7 +35,8 @@ export default function LoginForm() {
 
                 <div><Button
                     text="Log In with One-Time Passcode"
-                    onClick={() =>
+                    onClick={() => {
+                        console.log('clicked');
                         loginWithRedirect({
                             authorizationParams: {
                                 screen_hint: "login"
@@ -41,6 +44,7 @@ export default function LoginForm() {
                             login_hint: email,
                         })
                     }
+                }
                 />
                 </div>
 
