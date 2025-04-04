@@ -10,44 +10,44 @@ import PostList from './components/PostList';
 import Discussion from './components/Discussion';
 import HomePage from './components/HomePage';
 
-// function App() {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route path="/" element={<HomePage />} />
-//         <Route path="/user/:id/profile" element={<ProfilePage />} />
-//       </Routes>
-//     </Router>
-//   );
-// }
-
-
 function App() {
-
   return (
-    <>
-        <div>
-          < ProfilePage/>
-        </div>
-
-        <div>
-        < Register/>
-        </div>
-
-        <div>
-        < Login/>
-        </div>
-
-        <div>
-        < Auth0Login/>
-        </div>
-
-        <div>
-          < Discussion />
-
-        </div>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/user/:id/profile" element={<ProfilePage />} />
+      </Routes>
+    </Router>
+  );
 }
 
+
+// function App() {
+//
+//   return (
+//     <>
+//         <div>
+//           < ProfilePage/>
+//         </div>
+//
+//         <div>
+//         < Register/>
+//         </div>
+//
+//         <div>
+//         < Login/>
+//         </div>
+//
+//         <div>
+//         < Auth0Login/>
+//         </div>
+//
+//         <div>
+//           < Discussion />
+//
+//         </div>
+//     </>
+//   )
+// }
+//
 export default App
