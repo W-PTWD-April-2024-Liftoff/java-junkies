@@ -1,9 +1,9 @@
-// src/components/ProfilePage.js
+// src/components/ProfileForm.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../App.css';
 
-export const ProfilePage = () => {
+export const ProfileForm = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -111,4 +111,4 @@ const handleSubmit = async (e) => {
   );
 };
 
-export default ProfilePage;
+export default ProfileForm;
