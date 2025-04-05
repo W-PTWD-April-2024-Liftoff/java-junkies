@@ -31,12 +31,12 @@ public class PostController {
         return postService.getPostById(id);
     }
 
-    @PostMapping("/{id}/rate")
-    public Rating addRating(@PathVariable Long id, @RequestParam int rating) {
-        if (rating < 1 || rating > 5) {
+    @PutMapping("/{id}/rate")
+    public Rating addRating(@PathVariable Long id, @RequestBody Rating rating) {
+        if (rating.getRating() < 1 || rating.getRating() > 5) {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
         }
-        return postService.addRating(id, rating);
+        return postService.addRating(id, rating.getRating());
     }
     @DeleteMapping("/{id}")
     public void deletePostById(@PathVariable Long id) {
