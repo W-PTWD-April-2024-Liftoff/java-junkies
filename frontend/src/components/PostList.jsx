@@ -30,6 +30,11 @@ const PostList = () => {
                     <li key={post.id}>
                         <h3>{post.title}</h3>
                         <p>{post.content}</p>
+                        <p>{post.tags.map((tag) => {
+                            <li key={tag.id}>
+                                <p>{tag.name}</p>
+                            </li>
+                        })}</p>
                     </li>
                 ))}
             </ul>

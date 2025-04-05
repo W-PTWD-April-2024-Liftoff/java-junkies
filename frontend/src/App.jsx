@@ -1,35 +1,33 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
-import ProfilePage from "./components/ProfilePage";
+import HomePage from './components/HomePage';
+import ProfilePage from './components/ProfilePage';
 import Register from './components/Register';
 import Login from './components/Login';
 import Auth0Login from './components/Auth0Login';
 import CreatePost from './components/CreatePost';
 import PostList from './components/PostList';
 import Discussion from './components/Discussion';
-import HomePage from './components/HomePage';
+import EditPost from './components/EditPost';
+
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/user/:id/profile" element={<ProfilePage />} />
-      </Routes>
-    </Router>
-  );
-}
 
+      return (
 
-// function App() {
-//
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/user/login" element={<Login />} />
+            <Route path="/user/register" element={<Register />} />
+            <Route path="/update-profile/:id" element={<ProfilePage />} />
+          </Routes>
+        </Router>
+      );
+
 //   return (
 //     <>
-//         <div>
-//           < ProfilePage/>
-//         </div>
-//
 //         <div>
 //         < Register/>
 //         </div>
@@ -43,11 +41,11 @@ function App() {
 //         </div>
 //
 //         <div>
-//           < Discussion />
+//           <Discussion/>
 //
 //         </div>
 //     </>
 //   )
-// }
-//
+ }
+
 export default App

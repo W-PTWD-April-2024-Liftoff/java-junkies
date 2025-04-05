@@ -1,58 +1,40 @@
-// src/components/ProfilePage.jsx
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import '../App.css';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import PhotoUploader from './PhotoUploader';
 
-export const ProfilePage = () => {
+const UpdateProfilePage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
-
-useEffect(() => {
-  const newUser = {
-    id: null,
-    name: name || "Your Name",
-    email: email || "your@email.com",
-    username: username || "yourUsername",
-    bio: bio || "This is my bio"
-  };
-
-  fetch('http://localhost:8080/user/update-profile', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newUser),
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error('Failed to create or update user');
-      }
-      return res.json();
-    })
-    .then((data) => {
-      setUser(data);
-      setName(data.name || '');
-      setEmail(data.email || '');
-      setUsername(data.username || '');
-      setBio(data.bio || '');
-      console.log("✅ User created or loaded:", data);
-
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.error("❌ Error:", err.message);
-      setError(err);
-      setLoading(false);
-    });
-}, []);
-
+  // Fetch user details on load
+  useEffect(() => {
+    fetch(`http://localhost:8080/user/details/${id}`)
+      .then(async (res) => {
+        const text = await res.text();
+        if (!res.ok) throw new Error(text);
+        return JSON.parse(text);
+      })
+      .then((data) => {
+        setUser(data);
+        setName(data.name || '');
+        setEmail(data.email || '');
+        setUsername(data.username || '');
+        setBio(data.bio || '');
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,76 +47,47 @@ useEffect(() => {
       bio,
     };
 
-  try {
-    const response = await fetch('http://localhost:8080/user/update-profile', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedUser),
-    });
+    try {
+      const response = await fetch(`http://localhost:8080/user/update-profile/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedUser),
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to update user');
+      if (!response.ok) throw new Error("Update failed");
+
+      const updated = await response.json();
+      alert("✅ Profile updated!");
+      setUser(updated);
+    } catch (err) {
+      alert("❌ Error: " + err.message);
     }
-
-    const data = await response.json();
-    setUser(data);
-    setName(data.name);
-    setEmail(data.email);
-    setUsername(data.username);
-    setBio(data.bio);
-    alert('✅ Profile updated successfully!');
-  } catch (err) {
-    alert('Error: ' + err.message);
-  }
-};
-
-
+  };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error loading profile: {error.message}</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div>
-      <h1>In The Loop</h1>
-      <h2>User Profile</h2>
-
+    <div style={{ padding: '2rem' }}>
+      <h1>Profile</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <br />
+          <PhotoUploader />
+        <label>Name:</label><br />
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} /><br /><br />
 
-        <label>
-          Email:
-          <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <br />
+        <label>Email:</label><br />
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /><br /><br />
 
-        <label>
-          Username:
-          <input type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
-        </label>
-        <br />
+        <label>Username:</label><br />
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} /><br /><br />
 
-        <label>
-          Biography:
-          <input type='text' value={bio} onChange={(e) => setBio(e.target.value)} />
-        </label>
-        <br />
+        <label>Bio:</label><br />
+        <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
 
-        <button type='submit'>Save</button>
+        <button type="submit">Save</button>
       </form>
-
-
-      <div style={{ marginTop: '2rem', backgroundColor: '#f9f9f9', padding: '1rem' }}>
-        <h4>Live Preview (Debug):</h4>
-        <pre>{JSON.stringify(user, null, 2)}</pre>
-      </div>
     </div>
   );
 };
 
-export default ProfilePage;
+export default UpdateProfilePage;
