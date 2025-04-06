@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.post-item {
+  border-bottom: 1px solid #ddd;
+  padding: 16px 0;
+  transition: background-color 0.2s;
+}
+
+.post-item:hover {
+  background-color: #f9f9f9;
+}

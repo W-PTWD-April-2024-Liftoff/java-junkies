@@ -94,7 +94,7 @@ const Discussion = () => {
         <CreatePost onPostCreated={fetchPosts} />
         <div className="post-list">
             {posts.map((post) => (
-                <div key={post.id} className="post">
+                <div key={post.id} className="post-item">
                     {editingPost === post.id ? (
                         <EditPost post={post} onUpdate={() => { fetchPosts(); setEditingPost(null); }} onCancel={() => setEditingPost(null)} />
                     ) : (
