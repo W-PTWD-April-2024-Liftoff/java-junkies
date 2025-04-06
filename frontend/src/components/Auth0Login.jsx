@@ -24,5 +24,6 @@ export default function Auth0Form() {
             <div>
             <div><Button text="Log In" /></div>
             </div>
-    )
-}
+            </div>
+            )
+        };
