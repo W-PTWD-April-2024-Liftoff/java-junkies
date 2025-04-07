@@ -50,7 +50,7 @@ const RatingPost = (params) => {
     }
 
     return (
-        <div>
+        <div className="rating-section">
             <select id="rating" name="rating" onChange={(event) => {
                 console.log(event.target.value)
                 setRating(parseInt(event.target.value))

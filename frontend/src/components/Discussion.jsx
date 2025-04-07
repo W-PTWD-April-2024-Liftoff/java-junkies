@@ -52,14 +52,14 @@ const Discussion = () => {
                     {editingPost === post.id ? (
                         <EditPost post={post} onUpdate={() => { fetchPosts(); setEditingPost(null); }} onCancel={() => setEditingPost(null)} />
                     ) : (
-                        <>
+                        <div>
                             <h3>{post.title}</h3>
                             <p>{post.content}</p>
                             <p><strong>Tags:</strong> {post.tags.map(tag => tag.name).join()}</p>  
                             <button onClick={() => setEditingPost(post.id)}>Edit</button>
                             <button onClick={() => handleDelete(post.id)}>Delete</button>
                             <RatingPost post={post} setIsRatingChanged={setIsRatingChanged} />
-                        </>
+                        </div>
                     )}
                 </div>
             ))}
