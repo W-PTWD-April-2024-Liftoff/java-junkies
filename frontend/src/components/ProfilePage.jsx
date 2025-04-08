@@ -14,7 +14,6 @@ const UpdateProfilePage = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Fetch user details on load
   useEffect(() => {
     fetch(`http://localhost:8080/user/details/${id}`)
       .then(async (res) => {
@@ -71,7 +70,7 @@ const UpdateProfilePage = () => {
     <div style={{ padding: '2rem' }}>
       <h1>Profile</h1>
       <form onSubmit={handleSubmit}>
-          <PhotoUploader />
+          <PhotoUploader userId={user.id} />
         <label>Name:</label><br />
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} /><br /><br />
 
@@ -85,6 +84,8 @@ const UpdateProfilePage = () => {
         <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
 
         <button type="submit">Save</button>
+{/*               <a href="https://react.school" target="_blank"> */}
+{/*                 <Button>Main Page</Button> */}
       </form>
     </div>
   );

@@ -32,38 +32,36 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User save(User updateUser) {
-        return null;
-    }
 
     public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+    public void save(User user){
+        userRepository.save(user);
     }
 
     public String saveImageWithUUID(MultipartFile file, String uploadDir) throws IOException {
         Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
+        Files.createDirectories(uploadPath); // ✅ Only this path, not Paths.get(uploadDir) twice
 
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
+        String originalFileName = file.getOriginalFilename();
+        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+        String uniqueName = UUID.randomUUID().toString() + extension;
 
-        String originalName = file.getOriginalFilename();
-        String extension = "";
-
-        if (originalName != null && originalName.contains(".")) {
-            extension = originalName.substring(originalName.lastIndexOf("."));
-        }
-
-        String uuidName = UUID.randomUUID().toString() + extension;
-
-        Path filePath = uploadPath.resolve(uuidName);
+        Path filePath = uploadPath.resolve(uniqueName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-        return uuidName;
+        System.out.println("📂 Image saved at: " + filePath.toString());
+        return uniqueName;
     }
+
 
     public boolean existsById(Long id) {
         return false;
     }
 
+    public Optional<User> findByEmail(String email) {
+        return Optional.empty();
+    }
 }
 
