@@ -35,6 +35,12 @@ const UpdateProfilePage = () => {
       });
   }, [id]);
 
+
+  const handleClick = () => {
+    navigate('/posts');
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,10 +62,10 @@ const UpdateProfilePage = () => {
       if (!response.ok) throw new Error("Update failed");
 
       const updated = await response.json();
-      alert("✅ Profile updated!");
+      alert("Profile updated!");
       setUser(updated);
     } catch (err) {
-      alert("❌ Error: " + err.message);
+      alert("Error: " + err.message);
     }
   };
 
@@ -84,8 +90,8 @@ const UpdateProfilePage = () => {
         <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
 
         <button type="submit">Save</button>
-{/*               <a href="https://react.school" target="_blank"> */}
-{/*                 <Button>Main Page</Button> */}
+        <button type="button" onClick={handleClick}>Main Page</button>
+
       </form>
     </div>
   );
