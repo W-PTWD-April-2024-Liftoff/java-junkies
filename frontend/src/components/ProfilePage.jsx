@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PhotoUploader from './PhotoUploader';
+import './ProfilePage.css';
 
 const UpdateProfilePage = () => {
   const { id } = useParams();
@@ -73,9 +74,10 @@ const UpdateProfilePage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div className="full-page-container">
+    <div className="profile-box">
       <h1>Profile</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="profile-form">
           <PhotoUploader userId={user.id} />
         <label>Name:</label><br />
         <input type="text" value={name} onChange={(e) => setName(e.target.value)} /><br /><br />
@@ -89,12 +91,15 @@ const UpdateProfilePage = () => {
         <label>Bio:</label><br />
         <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
 
+       <div className="profile-buttons">
         <button type="submit">Save</button>
         <button type="button" onClick={handleClick}>Main Page</button>
-
+       </div>
       </form>
     </div>
+    </div>
   );
+
 };
 
 export default UpdateProfilePage;
