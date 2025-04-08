@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const PostList = () => {
+const PostList = ({ posts, onTagClick}) => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -22,24 +22,42 @@ const PostList = () => {
         }
     };
 
+        //return (
+        //     <div>
+        //          <h1>Discussion Posts</h1>
+        //     <ul>
+        //         {posts.map((post) => (
+        //             <li key={post.id}>
+        //                 <h3>{post.title}</h3>
+        //                 <p>{post.content}</p>
+        //                 <p>{post.tags.map((tag) => {
+        //                     <li key={tag.id}>
+        //                         <p>{tag.name}</p>
+        //                     </li>
+        //                 })}</p>
+        //             </li>
+        //         ))}
+        //     </ul>
+        //     </div>
+        // );
+
         return (
             <div>
-                 <h1>Discussion Posts</h1>
-            <ul>
-                {posts.map((post) => (
-                    <li key={post.id}>
-                        <h3>{post.title}</h3>
-                        <p>{post.content}</p>
-                        <p>{post.tags.map((tag) => {
-                            <li key={tag.id}>
-                                <p>{tag.name}</p>
-                            </li>
-                        })}</p>
-                    </li>
-                ))}
-            </ul>
+              {posts.map(post => (
+                <div className="forum-post" key={post.id}>
+                  <h2>{post.title}</h2>
+                  <p>{post.content}</p>
+                  <div className="tags">
+                    {post.tags.map(tag => (
+                      <span className="tag" key={tag} onClick={() => onTagClick(tag)}>
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-        );
+          );
 }
 
 export default PostList;
