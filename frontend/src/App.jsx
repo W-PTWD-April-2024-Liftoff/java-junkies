@@ -16,14 +16,18 @@ function App() {
 
       return (
 
-        <Router>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/user/login" element={<Login />} />
-            <Route path="/user/register" element={<Register />} />
-            <Route path="/update-profile/:id" element={<ProfilePage />} />
-          </Routes>
-        </Router>
+        // <Router>
+        //   <Routes>
+        //     <Route path="/" element={<HomePage />} />
+        //     <Route path="/user/login" element={<Login />} />
+        //     <Route path="/user/register" element={<Register />} />
+        //     <Route path="/update-profile/:id" element={<ProfilePage />} />
+        //   </Routes>
+        // </Router>
+        <div>
+        <Discussion />
+      </div>
+       
       );
 
 //   return (

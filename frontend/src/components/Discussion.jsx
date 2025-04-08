@@ -7,6 +7,7 @@ const Discussion = () => {
     const [posts, setPosts] = useState([]);
     const [editingPost, setEditingPost] = useState(null);
     const [isRatingChanged, setIsRatingChanged] = useState(false);
+   
 
     useEffect(() => {
         fetchPosts();
@@ -59,7 +60,7 @@ const Discussion = () => {
                             <button onClick={() => setEditingPost(post.id)}>Edit</button>
                             <button onClick={() => handleDelete(post.id)}>Delete</button>
                             <RatingPost post={post} setIsRatingChanged={setIsRatingChanged} />
-                        </div>
+                           </div>
                     )}
                 </div>
             ))}
