@@ -41,7 +41,7 @@ const CreateComment = ({onCommentCreated}) => {
         <button type="submit">Create Comment</button>
         </form>
     );
-
+ 
 };
 
 export default CreateComment;
