@@ -8,6 +8,7 @@ export const Navbar = ({ setResults }) => {
 
   const fetchData = (value) => {
     fetch("https://jsonplaceholder.typicode.com/users")
+    //"https://jsonplaceholder.typicode.com/users"
       .then((response) => response.json())
       .then((json) => {
         const results = json.filter((user) => {
