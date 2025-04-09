@@ -10,6 +10,7 @@ import CreatePost from './components/CreatePost';
 import PostList from './components/PostList';
 import Discussion from './components/Discussion';
 import EditPost from './components/EditPost';
+import Layout from './components/Layout';
 
 
 function App() {
@@ -24,10 +25,16 @@ function App() {
         //     <Route path="/update-profile/:id" element={<ProfilePage />} />
         //   </Routes>
         // </Router>
-        <div>
-        <Discussion />
-      </div>
-       
+      //   <div>
+      //   <Discussion />
+      // </div>
+    <Router>
+      <Layout>
+        <Routes>
+        <Route path="/posts" element={<Discussion />} />
+      </Routes>
+      </Layout>
+    </Router>   
       );
 
 //   return (
@@ -52,4 +59,4 @@ function App() {
 //   )
  }
 
-export default App
+export default App;
