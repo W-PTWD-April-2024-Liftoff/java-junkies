@@ -3,6 +3,7 @@ package com.launchcode.intheloop.service;
 import com.launchcode.intheloop.data.CommentRepository;
 import com.launchcode.intheloop.data.PostRepository;
 import com.launchcode.intheloop.models.Comment;
+import com.launchcode.intheloop.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,25 @@ public class CommentService {
     @Autowired
     private PostRepository postRepository;
 
-    public Comment createComment(Comment comment){
-        if(comment.getText() != null){
-            comment.setText(comment.getText());
+//    public Comment createComment(Comment comment){
+//        if(comment.getText() != null){
+//            comment.setText(comment.getText());
+//        }
+//        return commentRepository.save(comment);
+//    }
+
+    public Comment createComment(Long postId, Comment comment){
+        Optional<Post> optionalPost = postRepository.findById(postId);
+
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            new Comment();
+            comment.setPost(post);
+            commentRepository.save(comment);
+            return comment;
+        } else {
+            throw new RuntimeException("Post not found");
         }
-        return commentRepository.save(comment);
     }
 
     public Iterable<Comment> getAllComments(){

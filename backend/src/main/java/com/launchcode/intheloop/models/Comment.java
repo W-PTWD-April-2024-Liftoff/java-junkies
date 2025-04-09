@@ -8,14 +8,19 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name ="comments")
-@Getter
-@Setter
 public class Comment extends AbstractEntity {
 
+    @Getter
+    @Setter
     private String text;
+
+    @Getter
+    @Setter
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @Getter
+    @Setter
     private Post post;
 }
