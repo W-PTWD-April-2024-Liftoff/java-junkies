@@ -11,11 +11,11 @@ const Header = () => {
         </a>
     
       </div>
-    <nav className="space-x-4 text-sm">
+    {/* <nav>
         <Link to="/posts">Discussions</Link>
     
         <Link to="/login">Login</Link>
-      </nav>
+      </nav> */}
     </header>
   );
 };
