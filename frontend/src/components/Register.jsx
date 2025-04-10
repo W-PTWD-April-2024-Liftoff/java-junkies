@@ -32,7 +32,7 @@ export default function RegistrationForm() {
       navigate(`/update-profile/${userId}`);
     } else {
       const error = await response.json();
-      alert("❌ " + error.error);
+      alert("Error " + error.error);
     }
   };
 
