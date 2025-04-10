@@ -3,8 +3,7 @@ package com.launchcode.intheloop.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +11,8 @@ import java.time.LocalDateTime;
 @Table(name ="comments")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment extends AbstractEntity {
 
     @NotBlank
@@ -21,7 +22,7 @@ public class Comment extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
+    @Getter(AccessLevel.NONE)
     private Post post;
 
-    public Comment(){}
 }
