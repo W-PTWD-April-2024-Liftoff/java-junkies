@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
+import { useAuth0 } from '@auth0/auth0-react'; 
 import HomePage from './components/HomePage';
 import ProfilePage from './components/ProfilePage';
 import Register from './components/Register';

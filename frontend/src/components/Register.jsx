@@ -1,76 +1,106 @@
+import { useState } from "react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import InputField from "./InputField";
 
 export default function RegistrationForm() {
-    const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [verifiedPassword, setVerifiedPassword] = useState('');
-  const navigate = useNavigate();
+const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const newUser = {
-      email,
-      password,
-      verify: verifiedPassword,
-      username,
-    };
-
-    const response = await fetch('http://localhost:8080/user/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUser),
+  const [formData, setFormData] = useState({
+        email: '',
+        username: '',
+        password: '',
+        verifiedPassword: '',
     });
 
-    if (response.ok) {
+    const handleChange = (event) => {
+        const {name, value} = event.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if(formData.password !== formData.verifiedPassword) {
+            alert('Passwords must match.');
+            return;
+        };
+
+        const newUser = {
+            email: formData.email,
+          username: formData.username,
+            password: formData.password,
+            verifiedPassword: formData.verifiedPassword
+        };
+
+        try {
+            const response = await fetch('http://localhost:8080/user/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser),
+            });
+
+           if (response.ok) {
       const createdUser = await response.json();
-      const userId = createdUser.id;
-      navigate(`/update-profile/${userId}`);
+      alert(`${formData.email} was registered successfully!`);
+      navigate(`/update-profile/${createdUser.id}`);
     } else {
       const error = await response.json();
-      alert("Error " + error.error);
-    }
-  };
+      alert("Error " + error.error); 
+        } catch(error) {
+            console.error('Error:', error);
+            alert('Something went wrong. Try again.')
+        }
+        };
 
-  return (
-    <div>
-      <h1>In the Loop</h1>
-      <h2>Create an Account</h2>
-      <form onSubmit={handleSubmit}>
-          <InputField
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Choose a username"
-          />
+    return (
+        <div>
+            <h1>In the Loop</h1>
+            <h2>Create an Account</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <InputField
+                        type='email'
+                        name='email'
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Enter your email">
+                    </InputField>
+                </div>
 
-        <InputField
-          type='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-        />
+                <div>
+                    <InputField 
+                        type='password'
+                        name='password'
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Enter a password">
+                    </InputField>
+                </div>
 
-        <InputField
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter a password"
-        />
+                <div>
+                    <InputField 
+                        type='password'
+                        name='verifiedPassword'
+                        value={formData.verifiedPassword}
+                        onChange={handleChange}
+                        placeholder="Re-enter password">
+                    </InputField>
+                </div>
 
-        <InputField
-          type='password'
-          value={verifiedPassword}
-          onChange={(e) => setVerifiedPassword(e.target.value)}
-          placeholder="Re-enter password"
-        />
-
-        <div><Button text="Register" /></div>
-      </form>
-    </div>
-  );
+                <div>
+                    <Button 
+                    text="Register" 
+                    type="submit"
+                    />
+                </div>
+            </form>
+        </div>
+    );
 }
