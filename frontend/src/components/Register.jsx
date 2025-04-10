@@ -1,10 +1,15 @@
 import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import InputField from "./InputField";
 
 export default function RegistrationForm() {
-    const [formData, setFormData] = useState({
+const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
         email: '',
+        username: '',
         password: '',
         verifiedPassword: '',
     });
@@ -25,8 +30,9 @@ export default function RegistrationForm() {
             return;
         };
 
-        const userData = {
+        const newUser = {
             email: formData.email,
+          username: formData.username,
             password: formData.password,
             verifiedPassword: formData.verifiedPassword
         };
@@ -37,20 +43,21 @@ export default function RegistrationForm() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(userData),
+                body: JSON.stringify(newUser),
             });
 
-            if(response.ok) {
-                alert(`${formData.email} was registered successfully!`)
-            } else {
-                alert('Error: Something went wrong')
-            }
+           if (response.ok) {
+      const createdUser = await response.json();
+      alert(`${formData.email} was registered successfully!`);
+      navigate(`/update-profile/${createdUser.id}`);
+    } else {
+      const error = await response.json();
+      alert("Error " + error.error); 
         } catch(error) {
             console.error('Error:', error);
             alert('Something went wrong. Try again.')
         }
         };
-    
 
     return (
         <div>
@@ -95,5 +102,5 @@ export default function RegistrationForm() {
                 </div>
             </form>
         </div>
-    )
+    );
 }

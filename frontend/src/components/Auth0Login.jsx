@@ -37,4 +37,4 @@ export default function Auth0Login() {
             </form>
         </div>
     )
-}
+};

@@ -40,3 +40,161 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.post-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+
+.rating-section {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rating-section select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.rating-section button {
+  padding: 6px 12px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.rating-section button:hover {
+  background-color: #45a049;
+}
+
+.post-form {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.post-form input[type="text"],
+.post-form textarea {
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+  resize: vertical;
+}
+
+.post-form input[type="text"]:focus,
+.post-form textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+.post-form textarea {
+  min-height: 150px;
+}
+
+.post-form button {
+  align-self: flex-start;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.post-form button:hover {
+  background-color: #43a047;
+}
+
+/* Optional: Make it responsive */
+@media (max-width: 600px) {
+  .post-form {
+    padding: 1.2rem;
+  }
+
+  .post-form button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 16px; /* corresponds to MUI padding 2 (theme spacing * 2 = 8 * 2) */
+  background-color: #c9f6da;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16); /* approximates boxShadow: 3 */
+  margin-top: auto;
+  z-index: 1000; /* optional, ensures it sits above other content */
+}
+
+.logo {
+  position: fixed;        /* stays in place while scrolling */
+  top: 16px;              /* distance from the top */
+  left: 10px;             /* distance from the left */
+  height: 40px;           /* small, clean size */
+  width: auto;            /* maintain aspect ratio */
+  z-index: 1000;          /* keeps it above other elements */
+}
+
+.app-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color:  #c9f6da;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* similar to boxShadow: 3 */
+  z-index: 1000;
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+
+.toolbar {
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 75px;
+  margin-right: 0.75rem;
+}
+
+.title-text {
+  font-family: 'Atma', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #3E2723;
+}
