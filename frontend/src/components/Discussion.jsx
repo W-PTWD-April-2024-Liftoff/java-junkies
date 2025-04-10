@@ -7,6 +7,7 @@ const Discussion = () => {
     const [posts, setPosts] = useState([]);
     const [editingPost, setEditingPost] = useState(null);
     const [isRatingChanged, setIsRatingChanged] = useState(false);
+   
 
     useEffect(() => {
         fetchPosts();
@@ -46,7 +47,7 @@ const Discussion = () => {
         <div>
         <h1>Discussion Board</h1>
         <CreatePost onPostCreated={fetchPosts} />
-        <div className="post-list">
+        <div>
             {posts.map((post) => (
                 <div key={post.id} className="post-card">
                     {editingPost === post.id ? (
@@ -55,11 +56,22 @@ const Discussion = () => {
                         <div>
                             <h3>{post.title}</h3>
                             <p>{post.content}</p>
-                            <p><strong>Tags:</strong> {post.tags.map(tag => tag.name).join()}</p>  
-                            <button onClick={() => setEditingPost(post.id)}>Edit</button>
-                            <button onClick={() => handleDelete(post.id)}>Delete</button>
+                            <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'center'}}>
+                                <strong>Tags:</strong>
+                                {post.tags.map(tag => <p style={{padding: '0.5rem', 
+                                    backgroundColor: 'gray', 
+                                    fontWeight: 700,
+                                    color: 'white',
+                                    borderRadius: '30%'
+                                    }}>{tag.name}</p>)}
+                            </div>
+                            <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'center'}}>
+                                <button style={{borderRadius: '8px'}} onClick={() => setEditingPost(post.id)}>Edit</button>
+                                <button style={{borderRadius: '8px'}}  onClick={() => handleDelete(post.id)}>Delete</button>
+                            </div>
+                                
                             <RatingPost post={post} setIsRatingChanged={setIsRatingChanged} />
-                        </div>
+                           </div>
                     )}
                 </div>
             ))}

@@ -1,4 +1,4 @@
-:root {
+#root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -139,3 +139,62 @@
   }
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 16px; /* corresponds to MUI padding 2 (theme spacing * 2 = 8 * 2) */
+  background-color: #c9f6da;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16); /* approximates boxShadow: 3 */
+  margin-top: auto;
+  z-index: 1000; /* optional, ensures it sits above other content */
+}
+
+.logo {
+  position: fixed;        /* stays in place while scrolling */
+  top: 16px;              /* distance from the top */
+  left: 10px;             /* distance from the left */
+  height: 40px;           /* small, clean size */
+  width: auto;            /* maintain aspect ratio */
+  z-index: 1000;          /* keeps it above other elements */
+}
+
+.app-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color:  #c9f6da;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* similar to boxShadow: 3 */
+  z-index: 1000;
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+
+.toolbar {
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 75px;
+  margin-right: 0.75rem;
+}
+
+.title-text {
+  font-family: 'Atma', sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #3E2723;
+}

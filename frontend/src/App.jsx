@@ -10,11 +10,34 @@ import CreatePost from './components/CreatePost';
 import PostList from './components/PostList';
 import Discussion from './components/Discussion';
 import EditPost from './components/EditPost';
+import Layout from './components/Layout';
 
 
 function App() {
 
       return (
+
+        // <Router>
+        //   <Routes>
+        //     <Route path="/" element={<HomePage />} />
+        //     <Route path="/user/login" element={<Login />} />
+        //     <Route path="/user/register" element={<Register />} />
+        //     <Route path="/update-profile/:id" element={<ProfilePage />} />
+        //   </Routes>
+        // </Router>
+      //   <div>
+      //   <Discussion />
+      // </div>
+//     <Router>
+//       <Layout>
+//         <Routes>
+//         <Route path="/posts" element={<Discussion />} />
+//         <Route path="/" element={<HomePage />} />
+//         <Route path="/user/login" element={<Login />} />
+      
+//       </Routes>
+//       </Layout>
+//     </Router>   
 
         <Router>
           <Routes>
@@ -25,6 +48,7 @@ function App() {
             <Route path="/posts" element={<Discussion />} />
           </Routes>
         </Router>
+
       );
 
 //   return (
@@ -49,4 +73,4 @@ function App() {
 //   )
  }
 
-export default App
+export default App;
