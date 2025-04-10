@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -21,17 +23,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.StreamSupport;
+
+import static com.launchcode.intheloop.models.User.encoder;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("user")
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 
     @Autowired
@@ -46,19 +46,61 @@ public class UserController {
         return ResponseEntity.ok("In The loop is up");
     }
 
-    @PostMapping("add")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        if (user.getPassword() == null || user.getVerifiedPassword() == null) {
-            return ResponseEntity.badRequest().body("Password fields cannot be null.");
+    @PostMapping("/register")
+    public ResponseEntity<?> createUser(@RequestBody Map<String, String> userData) {
+            try {
+                String username = userData.get("username");
+                String email = userData.get("email");
+                String password = userData.get("password");
+                String verify = userData.get("verify");
+
+                if (!password.equals(verify)) {
+                    return ResponseEntity.badRequest().body(Map.of("error", "Passwords do not match"));
+                }
+
+                BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+                String hashedPassword = encoder.encode(password);
+
+                User newUser = new User();
+                newUser.setUsername(username);
+                newUser.setEmail(email);
+                newUser.setPwhash(hashedPassword);
+
+                userService.save(newUser);
+
+                return ResponseEntity.ok(newUser);
+
+            } catch (Exception e) {
+                e.printStackTrace(); // ✅ This will print full error in terminal
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Map.of("error", "Server error: " + e.getMessage()));
+            }
         }
 
-        if (!Objects.equals(user.getPassword(), user.getVerifiedPassword())) {
-            return ResponseEntity.status(400).body("Passwords do not match");
+
+        @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
+        String email = loginData.get("email");
+        String password = loginData.get("password");
+
+        Optional<User> optionalUser = userService.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
         }
 
-        userService.save(user);
-        return ResponseEntity.ok("User added successfully!");
+        User user = optionalUser.get();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (!passwordEncoder.matches(password, user.getPwhash())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Login successful",
+                "userId", user.getId()
+        ));
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
@@ -72,7 +114,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<Iterable<User>> getAllUsers() {
         Iterable<User> users = userService.getAllUsers();
         if (StreamSupport.stream(users.spliterator(), false).count() == 0) {
@@ -80,6 +122,18 @@ public class UserController {
         }
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("/details/{id}")
+    public ResponseEntity<?> displayUserDetails(@PathVariable Long id) {
+        Optional<User> user = userService.findUserById(id);
+
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
 
     @GetMapping("/{id}/profile")
         public ResponseEntity<?> getProfile (@PathVariable Long id) {
@@ -93,17 +147,17 @@ public class UserController {
         }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUserById(@PathVariable Long id, @RequestBody User updateUser) {
+    public ResponseEntity<?> updateUserById(@PathVariable Long id, @RequestBody User user) {
         if (!userService.existsById(id)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
-        updateUser.setId(id);
-        User saved = userService.save(updateUser);
+        user.setId(id);
+        userService.save(user);
 
-        return ResponseEntity.ok(saved);
+        return ResponseEntity.ok(user);
     }
 
-    @PostMapping("update-profile")
+    @PostMapping("/update-profile/{id}")
     public ResponseEntity<?> updateProfile(@RequestBody User updatedUser) {
 
         User user;
@@ -130,7 +184,7 @@ public class UserController {
         }
 
 
-    @PostMapping("images")
+    @PostMapping("/upload-photo")
     public ResponseEntity<?> uploadProfilePicture(
             @RequestParam("profilePicture") MultipartFile file,
             @RequestParam("id") Long userId) throws IOException {
@@ -142,66 +196,20 @@ public class UserController {
 
         Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isEmpty()) {
+            System.out.println("❌ User not found for ID: " + userId);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
-        String savedFileName = userService.saveImageWithUUID(file,uploadDir);
+            String fileName = userService.saveImageWithUUID(file, uploadDir);
+        System.out.println("✅ Saved image filename: " + fileName);
 
-        User user = optionalUser.get();
-
-        try {
-            String fileName = saveImage(file);
-
-            user.setProfilePictureUpload(savedFileName);
+            User user = optionalUser.get();
+            user.setProfilePictureUpload(fileName);
+        System.out.println("✅ Setting user.profilePictureUpload = " + fileName);
             userService.updateUser(user);
+        System.out.println("✅ User updated and saved");
 
             return ResponseEntity.ok("Profile picture uploaded and linked to user");
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed");
-        }
     }
 
-
-    private String saveImage(MultipartFile file) throws IOException {
-
-        Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
-
-        Files.createDirectories(Paths.get(uploadDir));
-
-        String originalFileName = file.getOriginalFilename();
-        System.out.println("📂 Original filename = " + originalFileName);
-        String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-        String uniqueName = UUID.randomUUID().toString() + extension;
-
-        Path filePath = uploadPath.resolve(uniqueName);
-
-        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-
-        return uniqueName;
-    }
-    
-    @GetMapping("images/{filename}")
-    public ResponseEntity<Resource> getImage(@PathVariable String filename) {
-        try {
-            Path filePath = Paths.get(uploadDir).resolve(filename).normalize();
-            System.out.println("📥 Trying to serve: " + filePath);
-
-            UrlResource resource = new UrlResource(filePath.toUri());
-
-            if (resource.exists()) {
-                String mimeType = Files.probeContentType(filePath);
-                return ResponseEntity.ok()
-                        .contentType(MediaType.parseMediaType(mimeType))
-                        .body((Resource) resource);
-            } else {
-                System.out.println("❌ File does not exist at: " + filePath);
-                return ResponseEntity.notFound().build();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
     }

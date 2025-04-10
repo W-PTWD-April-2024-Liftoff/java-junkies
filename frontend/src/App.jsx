@@ -28,16 +28,27 @@ function App() {
       //   <div>
       //   <Discussion />
       // </div>
-    <Router>
-      <Layout>
-        <Routes>
-        <Route path="/posts" element={<Discussion />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/user/login" element={<Login />} />
+//     <Router>
+//       <Layout>
+//         <Routes>
+//         <Route path="/posts" element={<Discussion />} />
+//         <Route path="/" element={<HomePage />} />
+//         <Route path="/user/login" element={<Login />} />
       
-      </Routes>
-      </Layout>
-    </Router>   
+//       </Routes>
+//       </Layout>
+//     </Router>   
+
+        <Router>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/user/login" element={<Login />} />
+            <Route path="/user/register" element={<Register />} />
+            <Route path="/update-profile/:id" element={<ProfilePage />} />
+            <Route path="/posts" element={<Discussion />} />
+          </Routes>
+        </Router>
+
       );
 
 //   return (
