@@ -49,8 +49,8 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody Map<String, String> userData) {
             try {
-                String username = userData.get("username");
                 String email = userData.get("email");
+                String username = userData.get("username");
                 String password = userData.get("password");
                 String verify = userData.get("verify");
 
@@ -61,9 +61,13 @@ public class UserController {
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 String hashedPassword = encoder.encode(password);
 
+                if (hashedPassword == null || hashedPassword.isEmpty()) {
+                    System.out.println("hashed pw is null/empty");
+                }
+
                 User newUser = new User();
-                newUser.setUsername(username);
                 newUser.setEmail(email);
+                newUser.setUsername(username);
                 newUser.setPwhash(hashedPassword);
 
                 userService.save(newUser);
@@ -71,12 +75,11 @@ public class UserController {
                 return ResponseEntity.ok(newUser);
 
             } catch (Exception e) {
-                e.printStackTrace(); // ✅ This will print full error in terminal
+                e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Map.of("error", "Server error: " + e.getMessage()));
             }
         }
-
 
         @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
@@ -196,18 +199,18 @@ public class UserController {
 
         Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isEmpty()) {
-            System.out.println("❌ User not found for ID: " + userId);
+            System.out.println("User not found for ID: " + userId);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
             String fileName = userService.saveImageWithUUID(file, uploadDir);
-        System.out.println("✅ Saved image filename: " + fileName);
+        System.out.println("Saved image filename: " + fileName);
 
             User user = optionalUser.get();
             user.setProfilePictureUpload(fileName);
-        System.out.println("✅ Setting user.profilePictureUpload = " + fileName);
+        System.out.println("Setting user.profilePictureUpload = " + fileName);
             userService.updateUser(user);
-        System.out.println("✅ User updated and saved");
+        System.out.println("User updated and saved");
 
             return ResponseEntity.ok("Profile picture uploaded and linked to user");
     }
