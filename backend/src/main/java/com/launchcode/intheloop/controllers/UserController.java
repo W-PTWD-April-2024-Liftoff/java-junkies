@@ -49,10 +49,15 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody Map<String, String> userData) {
             try {
-                String username = userData.get("username");
                 String email = userData.get("email");
+                String username = userData.get("username");
                 String password = userData.get("password");
                 String verify = userData.get("verify");
+
+//                System.out.println("email:" + email);
+//                System.out.println("username:" + username);
+//                System.out.println("password:" + password);
+//                System.out.println("verify:" + verify);
 
                 if (!password.equals(verify)) {
                     return ResponseEntity.badRequest().body(Map.of("error", "Passwords do not match"));
@@ -60,10 +65,15 @@ public class UserController {
 
                 BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
                 String hashedPassword = encoder.encode(password);
+//                System.out.println("hashed pw:" + hashedPassword);
+
+                if (hashedPassword == null || hashedPassword.isEmpty()) {
+                    System.out.println("hashed pw is null/empty");
+                }
 
                 User newUser = new User();
-                newUser.setUsername(username);
                 newUser.setEmail(email);
+                newUser.setUsername(username);
                 newUser.setPwhash(hashedPassword);
 
                 userService.save(newUser);
@@ -71,7 +81,7 @@ public class UserController {
                 return ResponseEntity.ok(newUser);
 
             } catch (Exception e) {
-                e.printStackTrace(); // ✅ This will print full error in terminal
+                e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Map.of("error", "Server error: " + e.getMessage()));
             }

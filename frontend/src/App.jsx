@@ -30,14 +30,14 @@ function App() {
       //   <Discussion />
       // </div>
 //     <Router>
-//       <Layout>
-//         <Routes>
-//         <Route path="/posts" element={<Discussion />} />
-//         <Route path="/" element={<HomePage />} />
-//         <Route path="/user/login" element={<Login />} />
+      // <Layout>
+      //   <Routes>
+      //   <Route path="/posts" element={<Discussion />} />
+      //   <Route path="/" element={<HomePage />} />
+      //   <Route path="/user/login" element={<Login />} />
       
-//       </Routes>
-//       </Layout>
+      // </Routes>
+      // </Layout>
 //     </Router>   
 
         <Router>
