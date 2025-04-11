@@ -40,6 +40,8 @@ const PostList = () => {
             </ul>
             </div>
         );
+
+    
 }
 
 export default PostList;

@@ -9,19 +9,23 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
 public class WatchList extends AbstractEntity{
 
-    //need to ask about annotations
-    //could be integer
+    @Getter
+    @Setter
+    public String title;
+
+    @Getter
+    @Setter
     public String savedPosts;
 
     //may need a list here to store posts
+    @Getter
+    @Setter
     @JoinColumn(name = "watchlist_id")
     @OneToMany
-    private final List<Post> posts = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     public WatchList(){}
 }

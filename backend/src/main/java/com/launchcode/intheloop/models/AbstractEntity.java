@@ -3,6 +3,7 @@ package com.launchcode.intheloop.models;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue
+    @NotNull
     private Long id;
 
     public Long getId() {
