@@ -2,8 +2,11 @@ package com.launchcode.intheloop.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -24,5 +27,6 @@ public class Comment extends AbstractEntity {
     @JoinColumn(name = "post_id")
     @Getter(AccessLevel.NONE)
     private Post post;
+    
 
 }
