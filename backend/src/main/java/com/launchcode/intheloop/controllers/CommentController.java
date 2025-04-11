@@ -6,10 +6,11 @@ import com.launchcode.intheloop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("")
 public class CommentController {
 
     @Autowired
@@ -18,68 +19,26 @@ public class CommentController {
     @Autowired
     PostService postService;
 
-    @GetMapping
-    public Iterable<Comment> getAllComments () {
-        return commentService.getAllComments();
+    @GetMapping("/posts/{postId}/comments")
+    public List<Comment> getCommentsForPost (@PathVariable Long postId) {
+
+        return commentService.getCommentsByPostId(postId);
     }
 
-    @PostMapping
-    public Comment createComment(@RequestBody Comment comment) {
-        return commentService.createComment(comment);
+    @PostMapping("/posts/{postId}/comments")
+    public Comment createComment(@PathVariable Long postId, @RequestBody Comment comment) {
+
+        return commentService.addComment(comment, postId);
     }
 
-    @GetMapping("/{id}")
-    public Optional<Comment> getCommentById (@PathVariable Long id) {
-        return commentService.getCommentById(id);
-    }
-
-    @PostMapping("/{id}")
-    public void deleteCommentById(@PathVariable Long id) {
-         commentService.deleteCommentById(id);
-    }
-
-    @PutMapping("/{id}")
-    public Comment updateComment (@PathVariable Long id, @RequestBody Comment updateComment) {
-        return commentService.updateCommentById(id, updateComment);
-    }
-
-
-
-
-
-
-//    @RequestMapping("/")
-//    public String index(Model model){
-//
-//        model.addAttribute("title", "Comments");
-//        model.addAttribute("comments", commentRepository.findAll());
-//
-//        return "comments/index";
+//    @PutMapping("/{id}")
+//    public Comment updateComment (@PathVariable Long id, @RequestBody Comment updateComment) {
+//        return commentService.updateCommentById(id, updateComment);
 //    }
 //
-//
-//    //need to attach comment to post by id somehow?
-//    @GetMapping("/new-comment")
-//    public String newCommentForm(Model model) {
-//
-//        model.addAttribute("comment", new Comment());
-//        model.addAttribute("posts", postRepository.findAll());
-//
-//        return "new-comment";
-//    }
-//
-//    @PostMapping("/new-comment")
-//    public String handleNewComment (Model model, @ModelAttribute @Valid Comment comment, Errors errors) {
-//        if (errors.hasErrors()) {
-//            model.addAttribute("comment", comment);
-//            model.addAttribute("posts", postRepository.findAll());
-//            return "new-comment";
-//        }
-//
-//        commentRepository.save(comment);
-//        model.addAttribute("comment", comment);
-//        return "comment";
-//
+//    @DeleteMapping("/delete")
+//    public void deleteComment(@PathVariable Long commentId) {
+//        commentService.deleteCommentById(commentId);
 //    }
 
 }

@@ -3,12 +3,15 @@ package com.launchcode.intheloop.service;
 import com.launchcode.intheloop.data.CommentRepository;
 import com.launchcode.intheloop.data.PostRepository;
 import com.launchcode.intheloop.models.Comment;
+import com.launchcode.intheloop.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -19,41 +22,16 @@ public class CommentService {
     @Autowired
     private PostRepository postRepository;
 
-    public Comment createComment(Comment comment){
-        if(comment.getText() != null){
-            comment.setText(comment.getText());
-        }
-        return commentRepository.save(comment);
+    public List<Comment> getCommentsByPostId(Long postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        return comments;
     }
 
-    public Iterable<Comment> getAllComments(){
-       return commentRepository.findAll();
+    public Comment addComment(Comment comment, Long postId) {
+        Post post = postRepository.findById(postId).get();
+        comment.setPost(post);
+        Comment savedComment = commentRepository.save(comment);
+        return comment;
     }
 
-    public Optional<Comment> getCommentById(Long id){
-        return commentRepository.findById(id);
-    }
-
-    public void deleteCommentById(Long id){
-        Optional<Comment> results = commentRepository.findById(id);
-
-     if(results.isEmpty()){
-        throw new NoSuchElementException("Comment not found with id "+ id);
-        }
-     Comment comment = results.get();
-     commentRepository.delete(comment);
-    }
-
-    public Comment updateCommentById(Long id, Comment updatedComment){
-        Optional<Comment> results = commentRepository.findById(id);
-
-        if(results.isEmpty()){
-            throw new NoSuchElementException("Comment not found with id "+ id);
-        }
-        Comment comment = results.get();
-        comment.setCreatedAt(updatedComment.getCreatedAt());
-        comment.setText(updatedComment.getText());
-
-        return commentRepository.save(comment);
-    }
 }
