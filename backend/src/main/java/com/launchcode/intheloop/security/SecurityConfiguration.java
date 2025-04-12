@@ -16,15 +16,14 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/user/register",
-                                "/user/login",
+
+                .authorizeHttpRequests(auth0-> auth0
+                        .requestMatchers("/user/register", 
+                                         "/user/login",
                                 "/user/add",
                                 "/user/details/**",
                                 "/user/update-profile/**",
-                                "/user/upload-photo"
-                        ).permitAll()
+                                "/user/upload-photo").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2

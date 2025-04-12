@@ -1,61 +1,63 @@
-import React, { use, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import InputField from "./InputField";
 
 
 export default function RegistrationForm() {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [verifiedPassword, setVerifiedPassword] = useState('');
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  const [formData, setFormData] = useState({
+    email: '',
+    username: '',
+    password: '',
+    verifiedPassword: '',
+  });
 
-  const handleSubmit = async (e) => {
-     e.preventDefault();
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
-   if (password !== verifiedPassword) {
-      alert("Passwords must match.");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (formData.password !== formData.verifiedPassword) {
+      alert('Passwords must match.');
       return;
-    }
-
-    const newUser = {
-        username,
-        email,
-      password,
-      verify: verifiedPassword,
     };
 
-    const response = await fetch('http://localhost:8080/user/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUser),
-    });
+    const newUser = {
+      email: formData.email,
+      username: formData.username,
+      password: formData.password,
+      verify: formData.verifiedPassword
+    };
 
-const text = await response.text();
-let createdUser = null;
+    try {
+      const response = await fetch('http://localhost:8080/user/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
 
-try {
-  if (text) {
-    createdUser = JSON.parse(text);
-  }
-} catch (err) {
-  console.warn("Could not parse response as JSON:", err);
-}
-
-
-   if (response.ok) {
-     if (createdUser && createdUser.id) {
-       alert(`${email} was registered successfully!`);
-       navigate(`/update-profile/${createdUser.id}`);
-     } else {
-       alert("Registered, but no user ID returned.");
-     }
-   } else {
-     alert("Registration failed: " + text);
-   }
-
+      if (response.ok) {
+        const createdUser = await response.json();
+        alert(`${formData.email} was registered successfully!`);
+        navigate(`/update-profile/${createdUser.id}`);
+      } else {
+        const error = await response.json();
+        alert("Error " + error.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong. Try again.')
+    };
   };
 
   return (
@@ -63,35 +65,55 @@ try {
       <h1>In the Loop</h1>
       <h2>Create an Account</h2>
       <form onSubmit={handleSubmit}>
-           <InputField
-                    type='username'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Create Username"
-                  />
 
-        <InputField
-          type='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-        />
+        <div>
+          <InputField
+            type='email'
+            name='email'
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Enter your email">
+          </InputField>
+        </div>
 
-        <InputField
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter a password"
-        />
+        <div>
+          <InputField
+            type='text'
+            name='username'
+            value={formData.username}
+            onChange={handleChange}
+            placeholder="Enter a username">
+          </InputField>
+        </div>
 
-        <InputField
-          type='password'
-          value={verifiedPassword}
-          onChange={(e) => setVerifiedPassword(e.target.value)}
-          placeholder="Re-enter password"
-        />
-        <div><Button text="Register" /></div>
+        <div>
+          <InputField
+            type='password'
+            name='password'
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Enter a password">
+          </InputField>
+        </div>
+
+        <div>
+          <InputField
+            type='password'
+            name='verifiedPassword'
+            value={formData.verifiedPassword}
+            onChange={handleChange}
+            placeholder="Re-enter password">
+          </InputField>
+        </div>
+
+        <div>
+          <Button
+            text="Register"
+            type="submit"
+          />
+        </div>
       </form>
     </div>
-  )
-  };
+  );
+};
+

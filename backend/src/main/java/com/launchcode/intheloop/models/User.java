@@ -21,9 +21,14 @@ public class User extends AbstractEntity {
     @Size(min = 3, max = 30)
     private String username;
 
-
     @NotBlank(message = "Email can not be empty")
     private String email;
+
+    @Transient
+    private String password;
+
+    @Transient
+    private String verifiedPassword;
 
     @Column(name = "pw_hash", nullable = false)
     @NotNull
