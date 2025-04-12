@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
+import CreateComment from "./CreateComment";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
