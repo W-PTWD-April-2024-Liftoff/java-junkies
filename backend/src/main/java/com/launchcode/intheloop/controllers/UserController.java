@@ -212,6 +212,7 @@ public class UserController {
             userService.updateUser(user);
         System.out.println("User updated and saved");
 
+
             return ResponseEntity.ok("Profile picture uploaded and linked to user");
     }
 

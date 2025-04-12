@@ -51,27 +51,6 @@ function App() {
         </Router>
 
       );
-
-//   return (
-//     <>
-//         <div>
-//         < Register/>
-//         </div>
-//
-//         <div>
-//         < Login/>
-//         </div>
-//
-//         <div>
-//         < Auth0Login/>
-//         </div>
-//
-//         <div>
-//           <Discussion/>
-//
-//         </div>
-//     </>
-//   )
  }
 
 export default App;

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import InputField from "./InputField";
 
+
 export default function RegistrationForm() {
   const navigate = useNavigate();
 
@@ -58,7 +59,6 @@ export default function RegistrationForm() {
       alert('Something went wrong. Try again.')
     };
   };
-
 
   return (
     <div>
@@ -116,3 +116,4 @@ export default function RegistrationForm() {
     </div>
   );
 };
+

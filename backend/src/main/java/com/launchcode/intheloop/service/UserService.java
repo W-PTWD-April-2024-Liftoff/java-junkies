@@ -43,15 +43,15 @@ public class UserService {
 
     public String saveImageWithUUID(MultipartFile file, String uploadDir) throws IOException {
         Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
-        Files.createDirectories(uploadPath); // ✅ Only this path, not Paths.get(uploadDir) twice
+        Files.createDirectories(uploadPath);
 
         String originalFileName = file.getOriginalFilename();
+
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         String uniqueName = UUID.randomUUID().toString() + extension;
 
         Path filePath = uploadPath.resolve(uniqueName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        System.out.println("📂 Image saved at: " + filePath.toString());
         return uniqueName;
     }
 

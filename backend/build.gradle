@@ -41,6 +41,7 @@ dependencies {
 	implementation 'com.auth0:java-jwt:4.2.1'
 
 	implementation("org.springframework.security:spring-security-crypto:5.5.1")
+
 }
 
 tasks.named('test') {
