@@ -25,14 +25,6 @@ public class User extends AbstractEntity {
     @NotBlank(message = "Email can not be empty")
     private String email;
 
-
-//    @NotBlank(message = "Password can not be empty")
-//    private String password;
-
-
-//    @NotBlank(message = "Password can not be empty")
-//    private String verifiedPassword;
-
     @Column(name = "pw_hash", nullable = false)
     @NotNull
     private String pwhash;
