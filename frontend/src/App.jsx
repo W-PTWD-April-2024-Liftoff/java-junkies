@@ -8,7 +8,6 @@ import PostList from './components/PostList';
 import Discussion from './components/Discussion';
 import { Navbar } from './components/Navbar';
 import { NavbarResultsList } from './components/NavbarResultsList';
-// import { ShareProvider } from './components/WatchList';
 
 
 function App() {
@@ -38,10 +37,12 @@ function App() {
           < Discussion />
         </div>
 
-        const [results, setResults] = useState ([]);
+        <div>
+      <DarkMode />
+    </div>
 
     </div>
   );
-}
+};
 
 export default App
