@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
+import Search from "./Search";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
@@ -45,6 +46,7 @@ const Discussion = () => {
         };
     return (
         <div>
+        <Search/>
         <h1>Discussion Board</h1>
         <CreatePost onPostCreated={fetchPosts} />
         <div>
