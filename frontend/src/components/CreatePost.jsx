@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-const CreatePost = ({onPostCreated}) => {
+const CreatePost = ({onPostCreated, setIsCreatePost}) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [tags, setTags] = useState ("");
@@ -33,6 +33,7 @@ const CreatePost = ({onPostCreated}) => {
             setTitle("");
             setContent("");
             setTags("");
+            setIsCreatePost(false);
         } catch (error) {
             console.error("Error creating post:", error);
         }
