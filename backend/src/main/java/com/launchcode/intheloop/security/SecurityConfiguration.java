@@ -23,7 +23,9 @@ public class SecurityConfiguration {
                                 "/user/add",
                                 "/user/details/**",
                                 "/user/update-profile/**",
-                                "/user/upload-photo").permitAll()
+                                "/user/upload-photo",
+                                "/posts",
+                                "/posts/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
