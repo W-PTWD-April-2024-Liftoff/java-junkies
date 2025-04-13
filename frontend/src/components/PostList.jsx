@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Layout from "./Layout";
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -23,6 +24,7 @@ const PostList = () => {
     };
 
         return (
+            <Layout>
             <div>
                  <h1>Discussion Posts</h1>
             <ul>
@@ -39,6 +41,8 @@ const PostList = () => {
                 ))}
             </ul>
             </div>
+            </Layout>
+
         );
 
     

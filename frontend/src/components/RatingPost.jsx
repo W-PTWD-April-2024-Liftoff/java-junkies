@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Layout from "./Layout";
 
 
 const RatingPost = (params) => {
@@ -50,6 +51,7 @@ const RatingPost = (params) => {
     }
 
     return (
+        <Layout>
         <div className="rating-section">
             <select id="rating" name="rating" onChange={(event) => {
                 console.log(event.target.value)
@@ -68,6 +70,7 @@ const RatingPost = (params) => {
                 displayRatings()
             }
         </div>
+        </Layout>
     )
 }
 

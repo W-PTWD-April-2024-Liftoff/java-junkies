@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PhotoUploader from './PhotoUploader';
+import Layout from "./Layout";
 
 const UpdateProfilePage = () => {
   const { id } = useParams();
@@ -73,8 +74,9 @@ const UpdateProfilePage = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Profile</h1>
+      <Layout>
+    <div style={{ padding: '10px' }}>
+      <h1>Create Profile</h1>
       <form onSubmit={handleSubmit}>
           <PhotoUploader userId={user.id} />
         <label>Name:</label><br />
@@ -89,12 +91,13 @@ const UpdateProfilePage = () => {
         <label>Bio:</label><br />
         <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
 
-        <button type="submit">Save</button>
-        <button type="button" onClick={handleClick}>Main Page</button>
+        <button type="submit" style={{ backgroundColor: 'lightblue', color: 'black', padding: '10px 20px', margin: '5px', border: 'none', borderRadius: '5px' }}>Save</button>
+        <button type="button" style={{ backgroundColor: 'lightblue', color: 'black', padding: '10px 20px', margin: '5px', border: 'none', borderRadius: '5px' }} onClick={handleClick}>Main Page</button>
 
       </form>
     </div>
+    </Layout>
   );
-};
+}
 
 export default UpdateProfilePage;

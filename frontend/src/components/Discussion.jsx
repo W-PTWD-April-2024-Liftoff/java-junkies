@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
+import Layout from "./Layout";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
@@ -44,8 +45,9 @@ const Discussion = () => {
           }
         };
     return (
-        <div>
-        <h1>Discussion Board</h1>
+            <Layout>
+         <div>
+        <h1 style={{ marginTop: "3rem", textAlign: "center" }}>Discussion Board</h1>
         <CreatePost onPostCreated={fetchPosts} />
         <div>
             {posts.map((post) => (
@@ -58,11 +60,11 @@ const Discussion = () => {
                             <p>{post.content}</p>
                             <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'center'}}>
                                 <strong>Tags:</strong>
-                                {post.tags.map(tag => <p style={{padding: '0.5rem', 
-                                    backgroundColor: 'gray', 
+                                {post.tags.map(tag => <p style={{padding: '0.5rem',
+                                    backgroundColor: 'gray',
                                     fontWeight: 700,
                                     color: 'white',
-                                    borderRadius: '30%'
+                                    borderRadius: '40%'
                                     }}>{tag.name}</p>)}
                             </div>
                             <div style={{display: 'flex', gap: '0.5rem', justifyContent: 'center'}}>
@@ -77,6 +79,8 @@ const Discussion = () => {
             ))}
         </div>
     </div>
+    </Layout>
+
   );
 };
 

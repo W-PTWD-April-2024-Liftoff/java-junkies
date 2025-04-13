@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import Layout from "./Layout";
 
 const CreatePost = ({onPostCreated}) => {
     const [title, setTitle] = useState("");
@@ -39,12 +40,16 @@ const CreatePost = ({onPostCreated}) => {
     };
 
     return (
+        <Layout>
+
         <form className="post-form" onSubmit = {handleSubmit}>
             <input type = "text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
             <textarea placeholder="Content" value={content} onChange={(e) => setContent(e.target.value)} required />
             <input type="text" placeholder="Tags (coma-separated)" value={tags} onChange={(e) => setTags(e.target.value)} /> 
             <button type = "submit"> Create Post</button>  
         </form>
+        </Layout>
+
     );
 };
 

@@ -1,10 +1,12 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Layout from "./Layout";
 
 const HomePage = () => {
 
   return (
+      <Layout>
     <>
     <div>
       <h1>Welcome to In The Loop</h1>
@@ -18,6 +20,7 @@ const HomePage = () => {
              </p>
              </div>
              </>
+             </Layout>
 
   );
 };
