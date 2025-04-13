@@ -16,10 +16,11 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-
                 .authorizeHttpRequests(auth0-> auth0
-                        .requestMatchers("/user/register", 
-                                         "/user/login",
+                        .requestMatchers(
+                                "/user/register",
+                                "/user/login",
+                                "/user/exists",
                                 "/user/add",
                                 "/user/details/**",
                                 "/user/update-profile/**",

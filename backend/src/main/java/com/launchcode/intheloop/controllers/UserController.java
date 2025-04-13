@@ -104,6 +104,16 @@ public class UserController {
         ));
     }
 
+    @GetMapping("/exists")
+    public ResponseEntity<?> checkUserExists(@RequestParam String email) {
+        Optional<User> user = userService.findByEmail(email);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
+        }
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
