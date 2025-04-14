@@ -3,6 +3,8 @@ import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
 import Layout from "./Layout";
+import ProfilePageButton from './ProfilePageButton';
+import Profile_Page from './Profile_Page';
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
@@ -48,6 +50,7 @@ const Discussion = () => {
             <Layout>
          <div>
         <h1 style={{ marginTop: "3rem", textAlign: "center" }}>Discussion Board</h1>
+          < ProfilePageButton/>
         <CreatePost onPostCreated={fetchPosts} />
         <div>
             {posts.map((post) => (

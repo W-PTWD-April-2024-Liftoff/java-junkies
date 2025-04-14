@@ -12,6 +12,7 @@ import PostList from './components/PostList';
 import Discussion from './components/Discussion';
 import EditPost from './components/EditPost';
 import Layout from './components/Layout';
+import Profile_Page from './components/Profile_Page';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
             <Route path="/user/register" element={<Register />} />
             <Route path="/update-profile/:id" element={<ProfilePage />} />
             <Route path="/posts" element={<Discussion />} />
+            <Route path="/:id/profile" element={<Profile_Page />} />
           </Routes>
         </Router>
 
