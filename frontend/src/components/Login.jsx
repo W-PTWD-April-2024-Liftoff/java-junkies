@@ -22,7 +22,7 @@ export default function LoginForm() {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/user/login', {
+            const response = await fetch('http://localhost:5176/api/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -96,7 +96,7 @@ export default function LoginForm() {
                                 return;
                                }
                                try {
-                                const response = await fetch(`http://localhost:8080/user/exists?email=${encodeURIComponent(email)}`, {
+                                const response = await fetch(`http://localhost:5176/api/user/exists?email=${encodeURIComponent(email)}`, {
                                     method: 'GET',
                                 });
 

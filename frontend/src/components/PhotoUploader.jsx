@@ -18,7 +18,7 @@ export function PhotoUploader({ userId }) {
       formData.append("id", userId);
 
       try {
-          const res = await fetch("http://localhost:8080/user/upload-photo", {
+          const res = await fetch("http://localhost:5176/api/user/upload-photo", {
               method: "POST",
               body: formData,
               });

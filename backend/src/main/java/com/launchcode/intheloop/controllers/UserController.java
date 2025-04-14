@@ -1,9 +1,13 @@
 package com.launchcode.intheloop.controllers;
+import com.launchcode.intheloop.models.CustomUserDetails;
 import com.launchcode.intheloop.models.Post;
 import com.launchcode.intheloop.models.User;
 import com.launchcode.intheloop.service.UserService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,11 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,6 +48,9 @@ public class UserController {
 
     @Value("${file.upload-dir:uploads/images}")
     private String uploadDir;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
 
     @GetMapping("")
@@ -81,27 +93,35 @@ public class UserController {
             }
         }
 
-        @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData) {
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData, HttpServletRequest request, HttpServletResponse response) {
         String email = loginData.get("email");
         String password = loginData.get("password");
 
-        Optional<User> optionalUser = userService.findByEmail(email);
-        if (optionalUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not found");
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            HttpSession session = request.getSession(true);
+            session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+
+            System.out.println("Session ID: " + session.getId()); // Check if session is created.
+            // Manually set the SameSite cookie with None and Secure attributes for cross-origin requests
+//            String cookieValue = "JSESSIONID=" + session.getId() + "; Path=/; HttpOnly; SameSite=None";
+//
+//            // Add the cookie to the response
+//            response.addHeader("Set-Cookie", cookieValue);
+  // Add the cookie to the response
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            User user = userDetails.getUser();
+            return ResponseEntity.ok(Map.of(
+                    "message", "Login successful",
+                    "userId", user.getId()
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
         }
-
-        User user = optionalUser.get();
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-        if (!passwordEncoder.matches(password, user.getPwhash())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
-
-        return ResponseEntity.ok(Map.of(
-                "message", "Login successful",
-                "userId", user.getId()
-        ));
     }
 
     @GetMapping("/exists")

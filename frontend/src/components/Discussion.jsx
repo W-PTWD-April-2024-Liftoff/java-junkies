@@ -16,7 +16,10 @@ const Discussion = () => {
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch("http://localhost:8080/posts");
+            const response = await fetch("http://localhost:5176/api/posts", {
+                method: 'GET',
+                credentials: 'include'
+            });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -31,7 +34,7 @@ const Discussion = () => {
 
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8080/posts/${id}`, {
+            const response = await fetch(`http://localhost:5176/api/posts/${id}`, {
                 method: "DELETE"
             });
 
@@ -45,8 +48,8 @@ const Discussion = () => {
         }
     };
     return (
-        <div>
-            <div style={{display: 'flex', gap: '10rem'}}>
+        <div style={{width: '800px'}}>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <h1>Discussion Board</h1>
                 {!isCreatePost ? <button style={{backgroundColor: 'lightblue', borderRadius: '10%'}} onClick={() => {
                     setIsCreatePost(true);
