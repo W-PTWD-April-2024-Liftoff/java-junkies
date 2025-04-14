@@ -94,7 +94,7 @@ public class UserController {
         }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> loginData, HttpServletRequest request) {
         String email = loginData.get("email");
         String password = loginData.get("password");
 
