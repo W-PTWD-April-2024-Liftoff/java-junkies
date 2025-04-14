@@ -15,8 +15,9 @@ const CreatePost = ({onPostCreated, setIsCreatePost}) => {
          };
 
         try {
-            const response = await fetch("http://localhost:8080/posts", {
+            const response = await fetch("http://localhost:5176/api/posts", {
                 method : "POST" ,
+                credentials: 'include',
                 headers : {
                     "Content-Type" : "application/json",
                 },
