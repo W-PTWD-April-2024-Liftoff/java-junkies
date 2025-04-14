@@ -26,7 +26,6 @@ public class PostController {
 
     @PostMapping()
     public Post createPost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody Post post) {
-        System.out.println(userDetails.getUser());
         return postService.createPost(post);
     }
 
