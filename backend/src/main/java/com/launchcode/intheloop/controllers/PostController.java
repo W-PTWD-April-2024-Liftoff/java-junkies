@@ -13,9 +13,7 @@ import java.security.Principal;
 import java.util.Optional;
 
 @RestController
-//@CrossOrigin(origins = "*")
 @RequestMapping("/posts")
-@CrossOrigin(origins = "http://localhost:5176", allowCredentials = "true")
 public class PostController {
 
     @Autowired
