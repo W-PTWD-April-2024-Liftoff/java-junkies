@@ -105,14 +105,6 @@ public class UserController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             HttpSession session = request.getSession(true);
             session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-
-            System.out.println("Session ID: " + session.getId()); // Check if session is created.
-            // Manually set the SameSite cookie with None and Secure attributes for cross-origin requests
-//            String cookieValue = "JSESSIONID=" + session.getId() + "; Path=/; HttpOnly; SameSite=None";
-//
-//            // Add the cookie to the response
-//            response.addHeader("Set-Cookie", cookieValue);
-  // Add the cookie to the response
             CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
             User user = userDetails.getUser();
             return ResponseEntity.ok(Map.of(
