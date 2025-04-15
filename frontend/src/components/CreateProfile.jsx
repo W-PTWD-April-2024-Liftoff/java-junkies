@@ -71,7 +71,7 @@ const UpdateProfilePage = () => {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (!user) return <p>User not found</p>;
 
   return (
       <Layout>

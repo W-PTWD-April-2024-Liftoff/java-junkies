@@ -36,11 +36,16 @@ function ProfilePage() {
       <div className='upc'>
         <div className="gradiant"></div>
         <div className="profile-down">
-          <img
-            src={user.profilePictureUpload ? `/uploads/images/${user.profilePictureUpload}` : '/default-avatar.png'}
-            alt="Profile"
-            className="profile-img"
-          />
+      <img
+        src={
+          user.profilePictureUpload
+            ? `/uploads/images/${user.profilePictureUpload}`
+            : '/default-avatar.png'
+        }
+        alt="Profile"
+        className="profile-img"
+      />
+
           <PhotoUploader userId={user.id} />
           <div className="profile-title">{user.name}</div>
           <div className="profile-description">{user.bio}</div>

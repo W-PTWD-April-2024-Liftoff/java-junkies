@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
+import ProfilePageButton from "./ProfilePageButton";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
@@ -46,6 +47,7 @@ const Discussion = () => {
     return (
         <div>
         <h1>Discussion Board</h1>
+        <ProfilePageButton />
         <CreatePost onPostCreated={fetchPosts} />
         <div>
             {posts.map((post) => (
