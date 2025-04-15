@@ -15,7 +15,7 @@ const EditPost = ({post, onUpdate, onCancel}) => {
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/posts/${post.id}`, {
+            const response = await fetch(`http://localhost:5176/api/posts/${post.id}`, {
                 method : "PUT",
                 headers : { "Content-Type": "application/json" },
                 body : JSON.stringify(updatedPost)

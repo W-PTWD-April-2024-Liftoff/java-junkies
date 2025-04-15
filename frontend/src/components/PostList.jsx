@@ -11,7 +11,7 @@ const PostList = () => {
     const fetchPosts = async () => {
 
         try{
-            const response = await fetch("http://localhost:8080/posts");
+            const response = await fetch("http://localhost:5176/api/posts");
             if(!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }

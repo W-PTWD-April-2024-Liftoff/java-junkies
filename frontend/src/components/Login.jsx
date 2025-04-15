@@ -2,7 +2,6 @@ import { useState } from "react";
 import Button from "./Button";
 import InputField from "./InputField";
 import { useAuth0 } from "@auth0/auth0-react";
-import Layout from "./Layout";
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
@@ -37,7 +36,6 @@ export default function LoginForm() {
 
 
     return (
-        <Layout>
         <div>
             <h1>In The Loop</h1>
             <h2>Log In</h2>
@@ -98,7 +96,5 @@ export default function LoginForm() {
             
             </form >
         </div>
-        </Layout>
-
     )
 }

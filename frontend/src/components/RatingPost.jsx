@@ -14,7 +14,7 @@ const RatingPost = (params) => {
     }
     const handleRate = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/posts/${post.id}/rate`, {
+            const response = await fetch(`http://localhost:5176/api/posts/${post.id}/rate`, {
                 method : "PUT",
                 headers : { "Content-Type": "application/json" },
                 body : JSON.stringify({rating})

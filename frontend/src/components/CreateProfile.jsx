@@ -16,7 +16,7 @@ const UpdateProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/user/details/${id}`)
+    fetch(`http://localhost:5176/api/user/details/${id}`)
       .then(async (res) => {
         const text = await res.text();
         if (!res.ok) throw new Error(text);
@@ -54,7 +54,7 @@ const UpdateProfilePage = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/user/update-profile/${id}`, {
+      const response = await fetch(`http://localhost:5176/api/user/update-profile/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedUser),
