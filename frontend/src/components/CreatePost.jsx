@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-const CreatePost = ({onPostCreated}) => {
+const CreatePost = ({onPostCreated, setIsCreatePost}) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [tags, setTags] = useState ("");
@@ -15,8 +15,9 @@ const CreatePost = ({onPostCreated}) => {
          };
 
         try {
-            const response = await fetch("http://localhost:8080/posts", {
+            const response = await fetch("http://localhost:5176/api/posts", {
                 method : "POST" ,
+                credentials: 'include',
                 headers : {
                     "Content-Type" : "application/json",
                 },
@@ -33,6 +34,7 @@ const CreatePost = ({onPostCreated}) => {
             setTitle("");
             setContent("");
             setTags("");
+            setIsCreatePost(false);
         } catch (error) {
             console.error("Error creating post:", error);
         }
