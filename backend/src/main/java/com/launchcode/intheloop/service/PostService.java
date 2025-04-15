@@ -58,7 +58,7 @@ public class PostService {
         Post post = results.get();
         post.setTitle(updatedPost.getTitle());
         post.setContent(updatedPost.getContent());
-
+        post.setTags(updatedPost.getTags());
         return postRepository.save(post);
     }
 
