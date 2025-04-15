@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
+import Comment from "./SimpleCommentSection";
+import CommentSection from "./CommentSection";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
     const [editingPost, setEditingPost] = useState(null);
     const [isRatingChanged, setIsRatingChanged] = useState(false);
     const [isCreatePost, setIsCreatePost] = useState(false);
+    const [isCommentCreation, setCommentCreation] = useState(false);
 
 
     useEffect(() => {
         fetchPosts();
-    }, [editingPost, isRatingChanged]);
+    }, [editingPost, isRatingChanged, isCommentCreation]);
 
     const fetchPosts = async () => {
         try {
@@ -44,6 +47,11 @@ const Discussion = () => {
             console.error("Error deleting post:", error);
         }
     };
+
+
+
+
+    
     return (
         <div>
             <div style={{display: 'flex', gap: '10rem'}}>
@@ -80,7 +88,10 @@ const Discussion = () => {
                                         </div>
 
                                         <RatingPost post={post} setIsRatingChanged={setIsRatingChanged} />
+                                        <Comment />
+                                        {/* <CommentSection post={post} setCommentCreation={setCommentCreation} /> */}
                                     </div>
+                                    
                                 )}
                             </div>
                         ))}
@@ -92,5 +103,5 @@ const Discussion = () => {
     );
 };
 
-
+                {/* isCommentCreation ? <CreateComment createComment={fetchPosts} setCommentCreation={setCommentCreation} /> : */}
 export default Discussion;
