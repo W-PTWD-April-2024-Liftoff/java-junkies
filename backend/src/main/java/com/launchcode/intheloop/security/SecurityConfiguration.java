@@ -74,11 +74,18 @@ public class SecurityConfiguration {
                 .securityContext(securityContext -> securityContext
                         .requireExplicitSave(false) // ❗ this is important
                 )
+                .logout(logout -> logout
+                    .logoutUrl("/user/logout") // Your frontend should call this POST endpoint
+                    .logoutSuccessHandler((request, response, authentication) -> {
+                        response.setStatus(HttpServletResponse.SC_OK); // No 302, just 200
+                })
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID") // optional, but good for session-based logout
+        )
                 .userDetailsService(customUserDetailsService);
 //                .oauth2ResourceServer(oauth2 -> oauth2
 //                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
 //                );
-
         return http.build();
     }
 
