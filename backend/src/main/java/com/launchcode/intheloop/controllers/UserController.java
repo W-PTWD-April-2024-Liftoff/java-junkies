@@ -116,6 +116,13 @@ public class UserController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        request.getSession().invalidate(); // Invalidate session
+        SecurityContextHolder.clearContext(); // Clear security context
+        return ResponseEntity.ok("Logged out successfully");
+    }
+
     @GetMapping("/exists")
     public ResponseEntity<?> checkUserExists(@RequestParam String email) {
         Optional<User> user = userService.findByEmail(email);

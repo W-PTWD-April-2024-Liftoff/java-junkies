@@ -52,7 +52,7 @@ const Discussion = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await fetch(`http://localhost:5176/api/logout`, {
+            const response = await fetch(`http://localhost:5176/api/user/logout`, {
                 method: "POST",
                 credentials: 'include'
             });
