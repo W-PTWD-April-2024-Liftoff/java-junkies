@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("")
+@CrossOrigin(origins = "*")
+@RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
@@ -19,22 +19,28 @@ public class CommentController {
     @Autowired
     PostService postService;
 
-    @GetMapping("/posts/{postId}/comments")
+    @GetMapping("/{id}")
     public List<Comment> getCommentsForPost (@PathVariable Long postId) {
 
         return commentService.getCommentsByPostId(postId);
     }
 
-    @PostMapping("/posts/{postId}/comments")
+    @PostMapping("/{id}")
     public Comment createComment(@PathVariable Long postId, @RequestBody Comment comment) {
 
-        return commentService.addComment(comment, postId);
+        return commentService.addComment(comment.getText(), postId);
     }
 
-//    @PutMapping("/{id}")
-//    public Comment updateComment (@PathVariable Long id, @RequestBody Comment updateComment) {
-//        return commentService.updateCommentById(id, updateComment);
+//    @PostMapping("/posts/{postId}/comments")
+//    public Comment createComment(@PathVariable Long postId, @RequestBody Comment comment) {
+//
+//        return commentService.addComment(comment, postId);
 //    }
+
+    @PutMapping("/{id}")
+    public Comment updateComment (@PathVariable Long id, @RequestBody Comment updateComment) {
+        return commentService.updateCommentById(id, updateComment);
+    }
 //
 //    @DeleteMapping("/delete")
 //    public void deleteComment(@PathVariable Long commentId) {
