@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "./Button";
 import InputField from "./InputField";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from "react-router-dom";
+import { replace, useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -13,8 +13,9 @@ export default function LoginForm() {
     const [passwordLogin, setPasswordLogin] = useState(false);
 
     useEffect(() => {
+        console.log("isAuthenticated:", isAuthenticated);
         if (isAuthenticated) {
-            navigate('/posts');
+            navigate('/posts', {replace: true});
         }
     }, [isAuthenticated, navigate]);
 
@@ -112,6 +113,9 @@ export default function LoginForm() {
                                         screen_hint: 'login',
                                         connection: 'email',
                                         login_hint: email,
+                                    },
+                                    appState: {
+                                        returnTo: '/posts',
                                     }
                                 });
                             } catch (error) {
