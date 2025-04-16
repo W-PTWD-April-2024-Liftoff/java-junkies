@@ -1,18 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Profile_Page from './Profile_Page';
-import Discussion from './Discussion';
-
+import { Link } from 'react-router-dom';
 
 function ProfilePageButton() {
+  const userId = localStorage.getItem('userId');
+
+  if (!userId) return null; // Don't show button if no user ID
+
   return (
     <div>
-      <Link to="/{id}/profile">
-        <button style={{backgroundColor: 'lightblue', borderRadius: '10%'}}>Go to Profile</button>
+      <Link to={`/profile/${userId}`}>
+        <button style={{ backgroundColor: 'lightblue', borderRadius: '10%' }}>
+          Go to Profile
+        </button>
       </Link>
     </div>
   );
 }
 
-
- export default ProfilePageButton;
+export default ProfilePageButton;

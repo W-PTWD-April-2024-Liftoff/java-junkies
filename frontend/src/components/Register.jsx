@@ -62,7 +62,7 @@ export default function RegistrationForm() {
   };
 
   return (
-      <Layout>
+
     <div>
       <h1>In the Loop</h1>
       <h2>Create an Account</h2>
@@ -116,7 +116,7 @@ export default function RegistrationForm() {
         </div>
       </form>
     </div>
-    </Layout>
+
   );
 };
 

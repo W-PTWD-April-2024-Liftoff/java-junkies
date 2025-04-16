@@ -24,10 +24,11 @@ const PostList = () => {
     };
 
         return (
-            <Layout>
+
             <div>
                  <h1>Discussion Posts</h1>
             <ul>
+                <ProfilePageButton />
                 {posts.map((post) => (
                     <li key={post.id}>
                         <h3>{post.title}</h3>
@@ -41,7 +42,7 @@ const PostList = () => {
                 ))}
             </ul>
             </div>
-            </Layout>
+
 
         );
 
