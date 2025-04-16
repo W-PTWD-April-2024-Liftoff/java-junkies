@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Button from "./Button";
 import InputField from "./InputField";
 import { useAuth0 } from "@auth0/auth0-react";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -34,6 +34,7 @@ export default function LoginForm() {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Logged in: ', data);
+                localStorage.setItem('passwordLogin', 'true');
                 navigate('/posts');
             } else {
                 const error = await response.text();
