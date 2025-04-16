@@ -8,7 +8,7 @@ function ProfilePageButton() {
   return (
     <div>
       <Link to="/{id}/profile">
-        <button>Go to Profile</button>
+        <button style={{backgroundColor: 'lightblue', borderRadius: '10%'}}>Go to Profile</button>
       </Link>
     </div>
   );

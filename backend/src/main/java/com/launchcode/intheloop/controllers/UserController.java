@@ -167,7 +167,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/{id}/profile")
+    @GetMapping("/profile/{id}")
         public ResponseEntity<?> getProfile (@PathVariable Long id) {
             Optional<User> optionalUser = userService.findUserById(id);
 

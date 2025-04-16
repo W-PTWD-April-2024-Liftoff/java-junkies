@@ -92,7 +92,20 @@ const UpdateProfilePage = () => {
         <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
 
         <button type="submit" style={{ backgroundColor: 'lightblue', color: 'black', padding: '10px 20px', margin: '5px', border: 'none', borderRadius: '5px' }}>Save</button>
-        <button type="button" style={{ backgroundColor: 'lightblue', color: 'black', padding: '10px 20px', margin: '5px', border: 'none', borderRadius: '5px' }} onClick={handleClick}>Main Page</button>
+        <button
+          type="button"
+          style={{
+            backgroundColor: 'lightblue',
+            color: 'black',
+            padding: '10px 20px',
+            margin: '5px',
+            border: 'none',
+            borderRadius: '5px'
+          }}
+          onClick={() => navigate('/login')}
+        >
+          Login
+        </button>
 
       </form>
     </div>

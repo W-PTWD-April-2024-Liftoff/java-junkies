@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
+import ProfilePageButton from "./ProfilePageButton";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
@@ -51,6 +52,7 @@ const Discussion = () => {
         <div style={{width: '800px'}}>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <h1>Discussion Board</h1>
+                <ProfilePageButton />
                 {!isCreatePost ? <button style={{backgroundColor: 'lightblue', borderRadius: '10%'}} onClick={() => {
                     setIsCreatePost(true);
                 }}>Create Post</button> : ''}

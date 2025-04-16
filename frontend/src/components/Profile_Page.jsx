@@ -11,8 +11,7 @@ function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-      console.log("🔎 ID param:", id);
-    fetch(`http://localhost:8080/user/${id}/profile`)
+    fetch(`http://localhost:8080/user/profile/${id}`)
       .then(async (res) => {
         const text = await res.text();
         if (!res.ok) throw new Error(text);
