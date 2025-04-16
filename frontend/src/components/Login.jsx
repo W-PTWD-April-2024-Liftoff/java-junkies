@@ -108,7 +108,7 @@ export default function LoginForm() {
                                     alert(`User with email ${email} is not registered.`);
                                     return;
                                 }
-                            
+
                                 loginWithRedirect({
                                     authorizationParams: {
                                         screen_hint: 'login',
