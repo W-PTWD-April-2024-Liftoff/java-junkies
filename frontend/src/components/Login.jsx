@@ -13,8 +13,9 @@ export default function LoginForm() {
     const [passwordLogin, setPasswordLogin] = useState(false);
 
     useEffect(() => {
+        console.log("isAuthenticated:", isAuthenticated);
         if (isAuthenticated) {
-            navigate('/posts');
+            navigate('/posts', {replace: true});
         }
     }, [isAuthenticated, navigate]);
 
@@ -33,6 +34,7 @@ export default function LoginForm() {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Logged in: ', data);
+                localStorage.setItem('passwordLogin', 'true');
                 navigate('/posts');
             } else {
                 const error = await response.text();
@@ -112,6 +114,9 @@ export default function LoginForm() {
                                         screen_hint: 'login',
                                         connection: 'email',
                                         login_hint: email,
+                                    },
+                                    appState: {
+                                        returnTo: '/posts',
                                     }
                                 });
                             } catch (error) {
