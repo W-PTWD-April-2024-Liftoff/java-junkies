@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css'
 import { useAuth0 } from '@auth0/auth0-react'; 
 import HomePage from './components/HomePage';
@@ -14,36 +14,23 @@ import Layout from './components/Layout';
 
 
 function App() {
+  const location = useLocation();
+  const { isLoading, isAuthenticated } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (location.pathname === '/' && isAuthenticated) {
+    return <Navigate to="/posts" replace />;
+  }
 
       return (
-
-        // <Router>
-        //   <Routes>
-        //     <Route path="/" element={<HomePage />} />
-        //     <Route path="/user/login" element={<Login />} />
-        //     <Route path="/user/register" element={<Register />} />
-        //     <Route path="/update-profile/:id" element={<ProfilePage />} />
-        //   </Routes>
-        // </Router>
-      //   <div>
-      //   <Discussion />
-      // </div>
-//     <Router>
-      // <Layout>
-      //   <Routes>
-      //   <Route path="/posts" element={<Discussion />} />
-      //   <Route path="/" element={<HomePage />} />
-      //   <Route path="/user/login" element={<Login />} />
-      
-      // </Routes>
-      // </Layout>
-//     </Router>   
-
        
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/user/login" element={<Login />} />
             <Route path="/user/register" element={<Register />} />
+            <Route path="/user/login" element={<Login />} />
             <Route path="/update-profile/:id" element={<CreateProfile />} />
             <Route path="/posts" element={<Discussion />} />
           </Routes>
