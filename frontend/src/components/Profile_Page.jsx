@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from './Layout';
-// import './Profile_Page.css';
 import PhotoUploader from './PhotoUploader';
-
 
 function ProfilePage() {
   const { id } = useParams();
@@ -11,6 +9,7 @@ function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
     fetch(`http://localhost:8080/user/profile/${id}`)
       .then(async (res) => {
         const text = await res.text();
@@ -22,7 +21,6 @@ function ProfilePage() {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Error loading user:", err.message);
         setLoading(false);
       });
   }, [id]);
@@ -33,21 +31,21 @@ function ProfilePage() {
   return (
     <Layout>
       <div className='upc'>
-        <div className="gradiant"></div>
+        <div className="gradient"></div>
         <div className="profile-down">
-      <img
-        src={
-          user.profilePictureUpload
-            ? `/uploads/images/${user.profilePictureUpload}`
-            : '/default-avatar.png'
-        }
-        alt="Profile"
-        className="profile-img"
-      />
+          <img
+            src={
+              user.profilePictureUpload
+                ? `/uploads/images/${user.profilePictureUpload}`
+                : '/default-avatar.png'
+            }
+            alt="Profile"
+            className="profile-img"
+          />
 
           <PhotoUploader userId={user.id} />
-          <div className="profile-title">{user.name}</div>
-          <div className="profile-description">{user.bio}</div>
+          <div className="profile-title">{user.name || 'No Name Provided'}</div>
+          <div className="profile-description">{user.bio || 'No Bio Yet'}</div>
           <div className="profile-button">
             <a href={`mailto:${user.email}`}>Contact me</a>
           </div>
