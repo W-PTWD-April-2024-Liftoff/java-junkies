@@ -4,24 +4,30 @@ import './index.css'
 import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Auth0Provider} from '@auth0/auth0-react';
+import { BrowserRouter } from 'react-router-dom';
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <BrowserRouter>
   <Auth0Provider
   domain="dev-ctjnz7bwztjyeaho.us.auth0.com"
   clientId='HrQCeCph03R9clb80eGRfM3TQ9JYD2TK'
   authorizationParams={{
-    redirect_uri: window.location.origin
+    redirect_uri: window.location.origin,
+    scope: 'openid profile email'
+  }}
+
+  onRedirectCallback={(appState) => {
+    window.history.replaceState(
+      {},
+      document.title,
+      appState?.returnTo || '/posts'
+    );
   }}
   >
     <App />
   </Auth0Provider>
+  </BrowserRouter>
   </StrictMode>
 )
-
-// createRoot(document.getElementById('root')).render(
-//   <StrictMode>
-//     <App />
-//   </StrictMode>,
-// )

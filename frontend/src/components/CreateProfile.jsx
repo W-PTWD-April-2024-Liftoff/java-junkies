@@ -89,7 +89,8 @@ const UpdateProfilePage = () => {
         <label>Bio:</label><br />
         <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
 
-        <button type="submit">Save</button>
+        <button type="submit">Save
+        </button>
         <button type="button" onClick={handleClick}>Main Page</button>
 
       </form>
