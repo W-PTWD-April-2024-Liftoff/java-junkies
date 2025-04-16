@@ -40,6 +40,7 @@ function App() {
 //     </Router>   
 
         <Router>
+          <Layout>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/user/login" element={<Login />} />
@@ -47,6 +48,7 @@ function App() {
             <Route path="/update-profile/:id" element={<CreateProfile />} />
             <Route path="/posts" element={<Discussion />} />
           </Routes>
+          </Layout>
         </Router>
 
       );

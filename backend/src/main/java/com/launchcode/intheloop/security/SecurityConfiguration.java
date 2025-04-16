@@ -65,7 +65,8 @@ public class SecurityConfiguration {
                                 "/user/add",
                                 "/user/details/**",
                                 "/user/update-profile/**",
-                                "/user/upload-photo"
+                                "/user/upload-photo",
+                                "/articles/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(session -> session

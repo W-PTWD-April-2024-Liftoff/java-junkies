@@ -146,7 +146,7 @@
   width: 100%;
   text-align: center;
   padding: 16px; /* corresponds to MUI padding 2 (theme spacing * 2 = 8 * 2) */
-  background-color: #c9f6da;
+  background-color: #e8f4ec;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16); /* approximates boxShadow: 3 */
   margin-top: auto;
   z-index: 1000; /* optional, ensures it sits above other content */
@@ -166,7 +166,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color:  #c9f6da;
+  background-color:  #e8f4ec;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* similar to boxShadow: 3 */
   z-index: 1000;
   text-align: center;

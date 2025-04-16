@@ -15,6 +15,7 @@ public class Post extends AbstractEntity {
     private String title;
     private String content;
 
+
     @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE})
     private List<Comment> comments;
 
@@ -28,6 +29,7 @@ public class Post extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private List<Tag> tags;
+
 
     public Post(){}
 }
