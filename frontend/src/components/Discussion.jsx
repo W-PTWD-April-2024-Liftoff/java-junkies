@@ -70,12 +70,9 @@ const Discussion = () => {
     return (
 
         <div>
-            {/* <div style={{ textAlign: 'right', marginBottom: '2rem' }}>
-                <button style={{ backgroundColor: '#e53e3e', borderRadius: '10%', color: 'white' }} onClick={handleLogout}>Logout</button>
-            </div> */}
             <div style={{ display: 'flex', gap: '5rem' }}>
                 <div>
-                    <div style={{ width: '1000px' }}>
+                    <div style={{ width: '1000px', marginTop: '4rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <h1>Discussion Board</h1>
                             {!isCreatePost ? <button style={{ backgroundColor: 'lightblue', borderRadius: '10%' }} onClick={() => {

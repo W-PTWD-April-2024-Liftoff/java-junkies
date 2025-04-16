@@ -21,7 +21,7 @@ const Header = () => {
     }
 }
   return (
-    <header className="app-bar">
+    <header>
       <div style={{display: 'flex', justifyContent: 'space-between'}}>
       <div className="toolbar">
         <a href="/" className="logo-title">
@@ -29,16 +29,10 @@ const Header = () => {
           <span className="title-text">In The Loop</span>
         </a>
       </div>
-      <div style={{ textAlign: 'right', marginBottom: '2rem' }}>
+      <div style={{ textAlign: 'right', marginBottom: '2rem', marginTop: '2rem' }}>
                 <button style={{ backgroundColor: '#e53e3e', borderRadius: '10%', color: 'white' }} onClick={handleLogout}>Logout</button>
             </div>
       </div>
-      
-    {/* <nav>
-        <Link to="/posts">Discussions</Link>
-    
-        <Link to="/login">Login</Link>
-      </nav> */}
     </header>
   );
 };
