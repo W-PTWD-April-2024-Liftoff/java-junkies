@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../assets/logo.png';
+import LogOut from './LogOut';
 
 
 function CustomNavbar() {
@@ -34,7 +35,10 @@ function CustomNavbar() {
 
         <Nav className='ms-auto'>
           <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
-          <Nav.Link as={Link} to="user/login">Log Out</Nav.Link>
+          {/* <Nav.Link as={Link} to="user/login">Log Out</Nav.Link> */}
+          <Nav.Item>
+            <LogOut/>
+          </Nav.Item>
           </Nav> 
           </Container >
     </Navbar >

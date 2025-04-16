@@ -15,7 +15,8 @@ createRoot(document.getElementById('root')).render(
   clientId='HrQCeCph03R9clb80eGRfM3TQ9JYD2TK'
   authorizationParams={{
     redirect_uri: window.location.origin,
-    scope: 'openid profile email'
+    scope: 'openid profile email read:posts create:posts read:profile create:profile update:profile update:posts upload:photo write:posts delete:posts',
+    audience: 'https://intheloop-auth0api.com',
   }}
 
   onRedirectCallback={(appState) => {

@@ -9,15 +9,40 @@ export default function LoginForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { loginWithRedirect, isAuthenticated } = useAuth0();
+    const { loginWithRedirect, isAuthenticated, getAccessTokenSilently, isLoading } = useAuth0();
     const [passwordLogin, setPasswordLogin] = useState(false);
 
     useEffect(() => {
-        console.log("isAuthenticated:", isAuthenticated);
-        if (isAuthenticated) {
-            navigate('/posts', {replace: true});
+        const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
+
+        if (!isLoading && isAuthenticated && !passwordLogin) {
+            getAccessTokenSilently({
+                audience: 'https://intheloop-auth0api.com'
+            })
+            .then((JWTtoken) => {
+                console.log("JWT Access Token:", JWTtoken);
+                
+                fetch('http://localhost:5176/api/posts', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${JWTtoken}`,
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Posts: ', data);
+                navigate('/posts', {replace: true});
+            })
+            .catch((error) => {
+                console.error('Error fetching posts: ', error);
+        });
+    })
+        .catch((error) => {
+            console.error('Error getting token: ', error);
+        });
         }
-    }, [isAuthenticated, navigate]);
+    }, [isLoading, isAuthenticated, getAccessTokenSilently, navigate]);
 
     const handlePasswordLogin = async (event) => {
         event.preventDefault();
