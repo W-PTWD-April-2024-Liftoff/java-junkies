@@ -58,14 +58,14 @@ const ProfilePage = () => {
             <Card.Body className='text-center'>
               <Image
                 src={
-                  user.profilePictureUpload
-                    ? `http://localhost:5176/uploads/images/${user.profilePictureUpload}`
-                    : '/default-avatar.png'
-                }
-                roundedCircle
-                fluid
-                alt="Profile Photo"
-              />
+                   user.profilePictureUpload
+                   ? `http://localhost:5176/uploads/images/${user.profilePictureUpload}`
+                     : '/default-avatar.png'
+                 }
+               roundedCircle
+                 fluid
+              alt="Profile Photo"
+               />
               <h2 className='mb-1'>{user.name || 'N/A'}</h2>
               <p className='text-muted'>username: {user.username || 'N/A'}</p>
               <p className='text-muted'>email: {user.email || 'N/A'}</p>
