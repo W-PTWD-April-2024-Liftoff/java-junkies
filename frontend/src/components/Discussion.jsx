@@ -21,17 +21,17 @@ const Discussion = () => {
         try {
 
             const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
-        let headers = {
-            'Content-Type': 'application/json'
-        };
+            let headers = {
+                'Content-Type': 'application/json'
+            };
 
-        if(!passwordLogin) {
-            const JWTtoken = await getAccessTokenSilently({
-                audience: "https://intheloop-auth0api.com",
-                scope: "read:posts"
-            });
-            headers.Authorization = `Bearer ${JWTtoken}`;
-        }
+            if (!passwordLogin) {
+                const JWTtoken = await getAccessTokenSilently({
+                    audience: "https://intheloop-auth0api.com",
+                    scope: "read:posts"
+                });
+                headers.Authorization = `Bearer ${JWTtoken}`;
+            }
 
             const response = await fetch("http://localhost:5176/api/posts", {
                 method: 'GET',
@@ -53,17 +53,23 @@ const Discussion = () => {
     const handleDelete = async (id) => {
         try {
 
-            const token = await getAccessTokenSilently({
-                audience: "http://localhost:5176",
-                scope: "delete:posts"
-            });
+            const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
+            let headers = {
+                'Content-Type': 'application/json'
+            };
+
+            if (!passwordLogin) {
+                const JWTtoken = await getAccessTokenSilently({
+                    audience: "https://intheloop-auth0api.com",
+                    scope: "delete:posts"
+                });
+                headers.Authorization = `Bearer ${JWTtoken}`;
+            }
 
             const response = await fetch(`http://localhost:5176/api/posts/${id}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${JWTtoken}`,
-                    'Content-Type': 'application/json'
-                }
+                method: 'DELETE',
+                credentials: 'include',
+                headers
             });
 
             if (!response.ok) {
@@ -76,10 +82,10 @@ const Discussion = () => {
         }
     };
     return (
-        <div style={{width: '800px'}}>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div style={{ width: '800px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h1>Discussion Board</h1>
-                {!isCreatePost ? <button style={{backgroundColor: 'lightblue', borderRadius: '10%'}} onClick={() => {
+                {!isCreatePost ? <button style={{ backgroundColor: 'lightblue', borderRadius: '10%' }} onClick={() => {
                     setIsCreatePost(true);
                 }}>Create Post</button> : ''}
             </div>
