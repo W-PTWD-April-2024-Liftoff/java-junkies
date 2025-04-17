@@ -1,4 +1,5 @@
 package com.launchcode.intheloop.security;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import com.launchcode.intheloop.service.CustomUserDetailsService;
 import jakarta.servlet.http.HttpServletResponse;

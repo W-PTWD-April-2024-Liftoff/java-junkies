@@ -41,6 +41,8 @@ function App() {
         <Route path="/posts" element={<Discussion />} />
         <Route path="/posts/:id" element={<Discussion />} />
                     {/* <Route path="/posts/:id" element={<PostDetails />} /> */}
+        <Route path="/profile/:id" element={<Profile_Page />} />
+
       </Routes>
       </div>
     </div>
