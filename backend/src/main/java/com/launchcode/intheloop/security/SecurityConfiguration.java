@@ -69,6 +69,7 @@ public class SecurityConfiguration {
                                 "/user/details/**",
                                 "/user/update-profile/**",
                                 "/user/upload-photo"
+
                         ).permitAll()
 
                         .requestMatchers("/posts").access(AuthorizationManagers.anyOf(

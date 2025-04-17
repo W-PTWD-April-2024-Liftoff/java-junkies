@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "./HomePage.css";
+import Layout from "./Layout";
 
 const HomePage = () => {
 
@@ -11,6 +12,7 @@ const HomePage = () => {
   }
 
   return (
+      <Layout>
     <>
     <div>
     <button onClick={darkMode}>Prefer dark mode?</button>
@@ -25,6 +27,7 @@ const HomePage = () => {
              </p>
              </div>
              </>
+             </Layout>
 
   );
 };

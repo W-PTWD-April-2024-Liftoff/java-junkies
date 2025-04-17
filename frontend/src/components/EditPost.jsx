@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Layout from "./Layout";
 
 const EditPost = ({post, onUpdate, onCancel}) => {
     const [title, setTitle] = useState(post.title);
@@ -32,6 +33,8 @@ const EditPost = ({post, onUpdate, onCancel}) => {
         }  
     };
     return (
+        <Layout>
+
         <form onSubmit={handleUpdate} className="edit-post-form">
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
             <textarea value={content} onChange={(e) => setContent(e.target.value)} required />
@@ -43,6 +46,8 @@ const EditPost = ({post, onUpdate, onCancel}) => {
             <button type="submit">Update Post</button>
             <button type="button" onClick={onCancel}>Cancel</button>
         </form>
+        </Layout>
+
     );
 };
 
