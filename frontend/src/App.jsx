@@ -28,44 +28,21 @@ function App() {
     return <Navigate to="/posts" replace />;
   }
 
-      return (
+  return (
+    <div>
+      <CustomNavbar /> 
 
-        // <Router>
-        //   <Routes>
-        //     <Route path="/" element={<HomePage />} />
-        //     <Route path="/user/login" element={<Login />} />
-        //     <Route path="/user/register" element={<Register />} />
-        //     <Route path="/update-profile/:id" element={<ProfilePage />} />
-        //   </Routes>
-        // </Router>
-      //   <div>
-      //   <Discussion />
-      // </div>
-//     <Router>
-      // <Layout>
-      //   <Routes>
-      //   <Route path="/posts" element={<Discussion />} />
-      //   <Route path="/" element={<HomePage />} />
-      //   <Route path="/user/login" element={<Login />} />
-      
-      // </Routes>
-      // </Layout>
-//     </Router>   
-
-
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/user/login" element={<Login />} />
-            <Route path="/user/register" element={<Register />} />
-            <Route path="/update-profile/:id" element={<CreateProfile />} />
-            <Route path="/posts" element={<Discussion />} />
-             <Route path="/profile/:id" element={<Profile_Page />} />
-
-
-          </Routes>
-
-
-      );
+      <div className="pt-5">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/user/register" element={<Register />} />
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/update-profile/:id" element={<CreateProfile />} />
+        <Route path="/posts" element={<Discussion />} />
+      </Routes>
+      </div>
+    </div>
+  );
  }
 
 export default App;
