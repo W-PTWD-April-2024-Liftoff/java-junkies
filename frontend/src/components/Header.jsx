@@ -4,7 +4,7 @@ import logo from '../assets/logo.png';
 const Header = () => {
   return (
     <header className="app-bar">
-      <div className="toolbar">
+      <div className="toolbar" style={{margin: '0'}}>
         <a href="/" className="logo-title">
           <img src={logo} alt="In the Loop Logo" className="logo-image" />
           <span className="title-text">In The Loop</span>

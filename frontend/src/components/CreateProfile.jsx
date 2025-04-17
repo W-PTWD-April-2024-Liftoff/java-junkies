@@ -15,7 +15,7 @@ const UpdateProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5176/api/user/details/${id}`)
+    fetch(`http://localhost:8080/api/user/details/${id}`)
       .then(async (res) => {
         const text = await res.text();
         if (!res.ok) throw new Error(text);
@@ -37,7 +37,7 @@ const UpdateProfilePage = () => {
 
 
   const handleClick = () => {
-    navigate('/posts');
+    navigate('/user/login');
   };
 
 
@@ -53,7 +53,7 @@ const UpdateProfilePage = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5176/api/user/update-profile/${id}`, {
+      const response = await fetch(`http://localhost:8080/api/user/update-profile/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedUser),
@@ -89,7 +89,8 @@ const UpdateProfilePage = () => {
         <label>Bio:</label><br />
         <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
 
-        <button type="submit">Save</button>
+        <button type="submit">Save
+        </button>
         <button type="button" onClick={handleClick}>Main Page</button>
 
       </form>

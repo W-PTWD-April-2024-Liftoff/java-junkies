@@ -37,8 +37,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void save(User user){
-        userRepository.save(user);
+    public User save(User user){
+        return userRepository.save(user);
     }
 
     public String saveImageWithUUID(MultipartFile file, String uploadDir) throws IOException {

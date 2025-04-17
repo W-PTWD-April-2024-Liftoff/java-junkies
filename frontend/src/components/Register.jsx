@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import InputField from "./InputField";
+import Layout from "./Layout";
 
 
 export default function RegistrationForm() {
@@ -61,6 +62,7 @@ export default function RegistrationForm() {
   };
 
   return (
+
     <div>
       <h1>In the Loop</h1>
       <h2>Create an Account</h2>
@@ -114,6 +116,7 @@ export default function RegistrationForm() {
         </div>
       </form>
     </div>
+
   );
 };
 

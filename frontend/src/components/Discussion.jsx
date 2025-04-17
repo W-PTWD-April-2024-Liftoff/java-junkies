@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
+import { useNavigate } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
     const [editingPost, setEditingPost] = useState(null);
     const [isRatingChanged, setIsRatingChanged] = useState(false);
     const [isCreatePost, setIsCreatePost] = useState(false);
+    const { getAccessTokenSilently } = useAuth0();
 
 
     useEffect(() => {
@@ -16,9 +19,24 @@ const Discussion = () => {
 
     const fetchPosts = async () => {
         try {
+
+            const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
+            let headers = {
+                'Content-Type': 'application/json'
+            };
+
+            if (!passwordLogin) {
+                const JWTtoken = await getAccessTokenSilently({
+                    audience: "https://intheloop-auth0api.com",
+                    scope: "read:posts"
+                });
+                headers.Authorization = `Bearer ${JWTtoken}`;
+            }
+
             const response = await fetch("http://localhost:5176/api/posts", {
                 method: 'GET',
-                credentials: 'include'
+                credentials: 'include',
+                headers
             });
 
             if (!response.ok) {
@@ -34,8 +52,24 @@ const Discussion = () => {
 
     const handleDelete = async (id) => {
         try {
+
+            const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
+            let headers = {
+                'Content-Type': 'application/json'
+            };
+
+            if (!passwordLogin) {
+                const JWTtoken = await getAccessTokenSilently({
+                    audience: "https://intheloop-auth0api.com",
+                    scope: "delete:posts"
+                });
+                headers.Authorization = `Bearer ${JWTtoken}`;
+            }
+
             const response = await fetch(`http://localhost:5176/api/posts/${id}`, {
-                method: "DELETE"
+                method: 'DELETE',
+                credentials: 'include',
+                headers
             });
 
             if (!response.ok) {
@@ -48,10 +82,10 @@ const Discussion = () => {
         }
     };
     return (
-        <div style={{width: '800px'}}>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div style={{ width: '800px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h1>Discussion Board</h1>
-                {!isCreatePost ? <button style={{backgroundColor: 'lightblue', borderRadius: '10%'}} onClick={() => {
+                {!isCreatePost ? <button style={{ backgroundColor: 'lightblue', borderRadius: '10%' }} onClick={() => {
                     setIsCreatePost(true);
                 }}>Create Post</button> : ''}
             </div>

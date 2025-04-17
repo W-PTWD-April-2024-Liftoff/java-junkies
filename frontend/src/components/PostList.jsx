@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Layout from "./Layout";
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -23,9 +24,11 @@ const PostList = () => {
     };
 
         return (
+
             <div>
                  <h1>Discussion Posts</h1>
             <ul>
+                <ProfilePageButton />
                 {posts.map((post) => (
                     <li key={post.id}>
                         <h3>{post.title}</h3>
@@ -39,6 +42,8 @@ const PostList = () => {
                 ))}
             </ul>
             </div>
+
+
         );
 
     
