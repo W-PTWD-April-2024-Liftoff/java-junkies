@@ -1,7 +1,9 @@
 package com.launchcode.intheloop.service;
 
+import com.launchcode.intheloop.data.CommentRepository;
 import com.launchcode.intheloop.data.PostRepository;
 import com.launchcode.intheloop.data.RatingRepository;
+import com.launchcode.intheloop.models.Comment;
 import com.launchcode.intheloop.models.Post;
 import com.launchcode.intheloop.models.Rating;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class PostService {
 
     @Autowired
     private RatingRepository ratingRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     public Post createPost(Post post){
 //        if(post.getContent() != null){
@@ -71,6 +76,20 @@ public class PostService {
             rating.setRating(ratingValue);
             ratingRepository.save(rating);
             return rating;
+        } else {
+            throw new RuntimeException("Post not found");
+        }
+    }
+
+    public Comment addComment(Long postId, String text) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
+        if (optionalPost.isPresent()) {
+            Post post = optionalPost.get();
+            Comment comment = new Comment();
+            comment.setPost(post);
+            comment.setText(text);
+            commentRepository.save(comment);
+            return comment;
         } else {
             throw new RuntimeException("Post not found");
         }

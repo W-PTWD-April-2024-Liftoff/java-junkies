@@ -5,7 +5,7 @@ import RatingPost from "./RatingPost";
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import Comment from "./SimpleCommentSection";
-import CommentSection from "./CommentSection";
+import CommentSection2 from "./CommentSection2";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
@@ -13,7 +13,7 @@ const Discussion = () => {
     const [isRatingChanged, setIsRatingChanged] = useState(false);
     const [isCreatePost, setIsCreatePost] = useState(false);
     const { getAccessTokenSilently } = useAuth0();
-    const [isCommentCreation, setCommentCreation] = useState(false);
+    const [isCommentCreation, setIsComment] = useState(false);
 
 
     useEffect(() => {
@@ -122,8 +122,8 @@ const Discussion = () => {
                                         </div>
 
                                         <RatingPost post={post} setIsRatingChanged={setIsRatingChanged} />
-                                        <Comment />
-                                        {/* <CommentSection post={post} setCommentCreation={setCommentCreation} /> */}
+                                        {/* <Comment /> */}
+                                        <CommentSection2 onCommentCreated={fetchPosts} setIsComment={setIsComment} />
                                     </div>
 
                                 )}

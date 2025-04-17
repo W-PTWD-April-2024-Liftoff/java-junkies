@@ -1,5 +1,6 @@
 package com.launchcode.intheloop.controllers;
 
+import com.launchcode.intheloop.models.Comment;
 import com.launchcode.intheloop.models.CustomUserDetails;
 import com.launchcode.intheloop.models.Post;
 import com.launchcode.intheloop.models.Rating;
@@ -41,6 +42,13 @@ public class PostController {
         }
         return postService.addRating(id, rating.getRating());
     }
+
+    @PostMapping("/{id}/comment")
+    public Comment addComment(@PathVariable Long id, @RequestBody Comment comment) {
+
+        return postService.addComment(id, comment.getText());
+    }
+
     @DeleteMapping("/{id}")
     public void deletePostById(@PathVariable Long id) {
          postService.deletePostById(id);

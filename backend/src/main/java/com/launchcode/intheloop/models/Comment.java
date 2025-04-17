@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-//@AllArgsConstructor
+@AllArgsConstructor
 public class Comment extends AbstractEntity {
 
     @NotBlank
@@ -24,9 +24,11 @@ public class Comment extends AbstractEntity {
 //    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
-//    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id")
     @Getter(AccessLevel.NONE)
     private Post post;
+
+//    public Comment(){}
     
 
 }
