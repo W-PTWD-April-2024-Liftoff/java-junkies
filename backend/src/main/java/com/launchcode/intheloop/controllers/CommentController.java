@@ -10,35 +10,52 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("")
+@CrossOrigin(origins = "*")
+@RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
     CommentService commentService;
+//
+//    @Autowired
+//    PostService postService;
 
-    @Autowired
-    PostService postService;
-
-    @GetMapping("/posts/{postId}/comments")
-    public List<Comment> getCommentsForPost (@PathVariable Long postId) {
-
-        return commentService.getCommentsByPostId(postId);
-    }
-
-    @PostMapping("/posts/{postId}/comments")
-    public Comment createComment(@PathVariable Long postId, @RequestBody Comment comment) {
-
-        return commentService.addComment(comment, postId);
-    }
-
-//    @PutMapping("/{id}")
-//    public Comment updateComment (@PathVariable Long id, @RequestBody Comment updateComment) {
-//        return commentService.updateCommentById(id, updateComment);
+//    @GetMapping("/{id}")
+//    public List<Comment> getCommentsForPost (@PathVariable Long postId) {
+//
+//        return commentService.getCommentsByPostId(postId);
 //    }
 //
-//    @DeleteMapping("/delete")
-//    public void deleteComment(@PathVariable Long commentId) {
-//        commentService.deleteCommentById(commentId);
+
+//    @PostMapping("/{id}/comment")
+//    public Comment addComment(@PathVariable Long id, @RequestBody Comment comment) {
+//
+//        return commentService.addComment(id, comment.getText());
 //    }
+
+    @GetMapping
+    public Iterable<Comment> getAllComments () {
+        return commentService.getAllComments();
+    }
+
+    @PostMapping
+    public Comment createComment (@RequestBody Comment comment) {
+        return commentService.createComment(comment);
+    }
+
+    @GetMapping({"/{id}"})
+    public Optional<Comment> getCommentById(@PathVariable Long id) {
+        return commentService.getCommentById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Comment updateComment (@PathVariable Long id, @RequestBody Comment updateComment) {
+        return commentService.updateCommentById(id, updateComment);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteComment(@PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
+    }
 
 }

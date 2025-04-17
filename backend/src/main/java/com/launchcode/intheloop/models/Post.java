@@ -15,7 +15,12 @@ public class Post extends AbstractEntity {
     private String title;
     private String content;
 
-    @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE})
+//    @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE})
+//    private List<Comment> comments;
+
+//    @JoinColumn(name = "post_id")
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
