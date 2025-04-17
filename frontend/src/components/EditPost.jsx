@@ -1,10 +1,13 @@
 import { useState } from "react";
 import Layout from "./Layout";
+import { useAuth0 } from "@auth0/auth0-react";
+import { buildAuthHeader } from "../utils/buildAuthHeader";
 
 const EditPost = ({post, onUpdate, onCancel}) => {
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
     const [tags, setTags] = useState(post.tags);
+    const {getAccessTokenSilently} = useAuth0();
 
     const handleUpdate = async (e) => {
         e.preventDefault();
@@ -13,11 +16,12 @@ const EditPost = ({post, onUpdate, onCancel}) => {
             content,
             tags: tags
         };
+        const headers = await buildAuthHeader({getAccessTokenSilently})
 
         try {
             const response = await fetch(`http://localhost:5176/api/posts/${post.id}`, {
                 method : "PUT",
-                headers : { "Content-Type": "application/json" },
+                headers,
                 body : JSON.stringify(updatedPost)
             });
 
