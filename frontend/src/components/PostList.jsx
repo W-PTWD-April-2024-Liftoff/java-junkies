@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Layout from "./Layout";
+import {Link} from "react-router-dom";
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -28,16 +28,19 @@ const PostList = () => {
             <div>
                  <h1>Discussion Posts</h1>
             <ul>
-                <ProfilePageButton />
                 {posts.map((post) => (
                     <li key={post.id}>
-                        <h3>{post.title}</h3>
+                        <h3>
+                            <Link to={`/posts/${post.id}`}>{post.title}</Link>
+                            </h3>
                         <p>{post.content}</p>
-                        <p>{post.tags.map((tag) => {
+                        <ul>
+                        {post.tags.map((tag) => {
                             <li key={tag.id}>
                                 <p>{tag.name}</p>
                             </li>
-                        })}</p>
+                        })}
+                        </ul>
                     </li>
                 ))}
             </ul>

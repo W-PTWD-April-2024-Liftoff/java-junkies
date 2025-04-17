@@ -7,12 +7,13 @@ import CreateProfile from './components/CreateProfile';
 import Register from './components/Register';
 import Login from './components/Login';
 import CreatePost from './components/CreatePost';
-import PostList from './components/PostList';
+// import PostList from './components/PostList';
 import Discussion from './components/Discussion';
 import EditPost from './components/EditPost';
-import Layout from './components/Layout';
+// import Layout from './components/Layout';
 import CustomNavbar from './components/Navbar';
 import Profile_Page from './components/Profile_Page';
+import PostDetails from './components/PostDetails';
 
 
 function App() {
@@ -39,12 +40,13 @@ function App() {
         <Route path="/user/login" element={<Login />} />
         <Route path="/update-profile/:id" element={<CreateProfile />} />
         <Route path="/posts" element={<Discussion />} />
-        <Route path="/posts/:id" element={<Discussion />} />
-                    {/* <Route path="/posts/:id" element={<PostDetails />} /> */}
+        {/* <Route path="/posts/:id" element={<Discussion />} /> */}
+        <Route path="/posts/:id" element={<PostDetails />} />
         <Route path="/profile/:id" element={<Profile_Page />} />
 
       </Routes>
       </div>
+      
     </div>
   );
  }
