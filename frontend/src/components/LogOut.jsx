@@ -11,9 +11,9 @@ const LogOut = () => {
     const handleLogout = async () => {
         try {
 
-            const passowrdLogin = localStorage.getItem('passwordLogin') === 'true';
+            const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
 
-            if (passowrdLogin) {
+            if (passwordLogin) {
                 const response = await fetch('http://localhost:5176/api/user/logout', {
                     method: 'POST',
                     credentials: 'include',
