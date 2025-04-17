@@ -8,6 +8,11 @@ import com.launchcode.intheloop.models.Post;
 import com.launchcode.intheloop.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.naming.directory.SearchResult;
+import java.util.List;
 
 @Service
 public class DataService {
@@ -15,26 +20,10 @@ public class DataService {
     @Autowired
     PostRepository postRepository;
 
-    @Autowired
-    CommentRepository commentRepository;
 
-    @Autowired
-    UserRepository userRepository;
+//    public List<SearchResult> search(@RequestParam String searchTerm) {
+//        return postRepository.search(searchTerm);
+//    }
 
-    Iterable<Post> posts;
-    Iterable<Comment> comments;
-    Iterable<User> users;
-
-    public Iterable<Post> search(String query) {
-        Iterable<Post> posts;
-        Iterable<Comment> comments;
-        Iterable<User> users;
-
-        posts = postRepository.findAll();
-        comments = commentRepository.findAll();
-        users = userRepository.findAll();
-
-        return posts;
-    }
 
 }

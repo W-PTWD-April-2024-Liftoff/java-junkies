@@ -11,6 +11,7 @@ import PostList from './components/PostList';
 import Discussion from './components/Discussion';
 import EditPost from './components/EditPost';
 import Layout from './components/Layout';
+import PostDetails from './components/PostDetails';
 
 
 function App() {
@@ -46,6 +47,8 @@ function App() {
             <Route path="/user/register" element={<Register />} />
             <Route path="/update-profile/:id" element={<CreateProfile />} />
             <Route path="/posts" element={<Discussion />} />
+            <Route path="/posts/:id" element={<Discussion />} />
+            {/* <Route path="/posts/:id" element={<PostDetails />} /> */}
           </Routes>
         </Router>
 

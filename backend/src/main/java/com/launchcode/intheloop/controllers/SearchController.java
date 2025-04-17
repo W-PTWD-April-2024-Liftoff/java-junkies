@@ -8,12 +8,14 @@ import com.launchcode.intheloop.models.Post;
 import com.launchcode.intheloop.models.User;
 import com.launchcode.intheloop.service.DataService;
 import com.launchcode.intheloop.service.PostService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.naming.directory.SearchResult;
 import java.awt.*;
 import java.util.List;
 
@@ -21,40 +23,14 @@ import java.util.List;
 public class SearchController {
 
     @Autowired
-    DataService dataService;
+    public PostService postService;
 
-    @Autowired
-    PostRepository postRepository;
 
-    @Autowired
-    CommentRepository commentRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @RequestMapping("")
-    public String search() {
-        return search();
-    }
-
-//    @PostMapping("results")
-//    public String displaySearchResults(@RequestParam String searchTerm) {
-//        Iterable<Post> posts;
-//        Iterable<Comment> comments;
-//        Iterable<User> users;
-//
-//        if (searchTerm.toLowerCase().equals("")) {
-//            posts = postRepository.findAll();
-//            comments = commentRepository.findAll();
-//            users = userRepository.findAll();
-//        } else {
-////            posts = ()
-//        }
-//
-//
+//    @GetMapping("/posts/search")
+//    public ResponseEntity<List<Post>> searchPosts(@RequestParam String searchTerm) {
+//        System.out.println("searching with " + searchTerm);
+//        List<Post> posts = postService.searchPosts(searchTerm);
+//        return new ResponseEntity<>(posts, HttpStatus.OK);
 //    }
-
-//    public List<Post> search(@RequestParam String query) {
-//        return dataService.search(query);
-    }
+}
 

@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import CreatePost from "./CreatePost";
 import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
+import { SearchBar } from "./SearchBar";
+import { SearchBarResultsList } from "./SearchBarResultsList";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
     const [editingPost, setEditingPost] = useState(null);
     const [isRatingChanged, setIsRatingChanged] = useState(false);
     const [isCreatePost, setIsCreatePost] = useState(false);
+    const [results, setResults] = useState([]);
 
 
     useEffect(() => {
@@ -47,10 +50,16 @@ const Discussion = () => {
             console.error("Error deleting post:", error);
         }
     };
+
+
     return (
         <div style={{width: '800px'}}>
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                 <h1>Discussion Board</h1>
+                <div>
+                <SearchBar setResults={setResults}/>
+                {results && results.length > 0 && <SearchBarResultsList results={results}/>}
+                </div>
                 {!isCreatePost ? <button style={{backgroundColor: 'lightblue', borderRadius: '10%'}} onClick={() => {
                     setIsCreatePost(true);
                 }}>Create Post</button> : ''}
