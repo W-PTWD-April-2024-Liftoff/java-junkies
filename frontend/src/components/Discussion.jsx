@@ -4,6 +4,7 @@ import EditPost from "./EditPost";
 import RatingPost from "./RatingPost";
 import { useNavigate } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
+import { buildAuthHeader } from "../utils/buildAuthHeader";
 
 const Discussion = () => {
     const [posts, setPosts] = useState([]);
@@ -19,19 +20,7 @@ const Discussion = () => {
 
     const fetchPosts = async () => {
         try {
-
-            const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
-            let headers = {
-                'Content-Type': 'application/json'
-            };
-
-            if (!passwordLogin) {
-                const JWTtoken = await getAccessTokenSilently({
-                    audience: "https://intheloop-auth0api.com",
-                    scope: "read:posts"
-                });
-                headers.Authorization = `Bearer ${JWTtoken}`;
-            }
+            const headers = await buildAuthHeader({getAccessTokenSilently})
 
             const response = await fetch("http://localhost:5176/api/posts", {
                 method: 'GET',
@@ -53,18 +42,7 @@ const Discussion = () => {
     const handleDelete = async (id) => {
         try {
 
-            const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
-            let headers = {
-                'Content-Type': 'application/json'
-            };
-
-            if (!passwordLogin) {
-                const JWTtoken = await getAccessTokenSilently({
-                    audience: "https://intheloop-auth0api.com",
-                    scope: "delete:posts"
-                });
-                headers.Authorization = `Bearer ${JWTtoken}`;
-            }
+            const headers = await buildAuthHeader({getAccessTokenSilently})
 
             const response = await fetch(`http://localhost:5176/api/posts/${id}`, {
                 method: 'DELETE',
