@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from "react";
 import Layout from "./Layout";
+import { buildAuthHeader } from "../utils/buildAuthHeader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CreatePost = ({onPostCreated, setIsCreatePost}) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [tags, setTags] = useState ("");
+    const { getAccessTokenSilently } = useAuth0();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,12 +19,11 @@ const CreatePost = ({onPostCreated, setIsCreatePost}) => {
          };
 
         try {
+            const headers = await buildAuthHeader({getAccessTokenSilently})
             const response = await fetch("http://localhost:5176/api/posts", {
                 method : "POST" ,
                 credentials: 'include',
-                headers : {
-                    "Content-Type" : "application/json",
-                },
+                headers,
                 body : JSON.stringify(postData)
             });
 

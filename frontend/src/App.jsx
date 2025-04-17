@@ -42,6 +42,7 @@ function App() {
         <Route path="/user/profile/:id" element={<Profile_Page />} />
       </Routes>
       </div>
+      
     </div>
   );
  }
