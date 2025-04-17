@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import Layout from "./Layout";
 
 const CreatePost = ({onPostCreated, setIsCreatePost}) => {
     const [title, setTitle] = useState("");
@@ -15,8 +16,9 @@ const CreatePost = ({onPostCreated, setIsCreatePost}) => {
          };
 
         try {
-            const response = await fetch("http://localhost:8080/posts", {
+            const response = await fetch("http://localhost:5176/api/posts", {
                 method : "POST" ,
+                credentials: 'include',
                 headers : {
                     "Content-Type" : "application/json",
                 },
@@ -40,12 +42,16 @@ const CreatePost = ({onPostCreated, setIsCreatePost}) => {
     };
 
     return (
+
+
         <form className="post-form" onSubmit = {handleSubmit}>
             <input type = "text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
             <textarea placeholder="Content" value={content} onChange={(e) => setContent(e.target.value)} required />
             <input type="text" placeholder="Tags (coma-separated)" value={tags} onChange={(e) => setTags(e.target.value)} /> 
             <button type = "submit"> Create Post</button>  
         </form>
+
+
     );
 };
 

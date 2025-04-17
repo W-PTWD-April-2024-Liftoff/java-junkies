@@ -1,20 +1,21 @@
 import { useState } from "react";
+import Layout from "./Layout";
 
 const EditPost = ({post, onUpdate, onCancel}) => {
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
-    const [tags, setTags] = useState(post.tags.join(", "));
+    const [tags, setTags] = useState(post.tags);
 
     const handleUpdate = async (e) => {
         e.preventDefault();
         const updatedPost = {
             title,
             content,
-            tags: tags.split(",").map(tag => tag.trim())
+            tags: tags
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/posts/${post.id}`, {
+            const response = await fetch(`http://localhost:5176/api/posts/${post.id}`, {
                 method : "PUT",
                 headers : { "Content-Type": "application/json" },
                 body : JSON.stringify(updatedPost)
@@ -32,13 +33,21 @@ const EditPost = ({post, onUpdate, onCancel}) => {
         }  
     };
     return (
+        <Layout>
+
         <form onSubmit={handleUpdate} className="edit-post-form">
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
             <textarea value={content} onChange={(e) => setContent(e.target.value)} required />
-            <input type="text" value={tags} onChange={(e) => setTags(e.target.value)} placeholder="Tags (comma-separated)" />
+            <input type="text" value={tags.map(tag => tag.name).join(",")} onChange={(e) => {
+                const tagValues = e.target.value.split(",")
+                const updatedTags = tagValues.map(value => ({name: value}))
+                setTags(updatedTags)
+            }} placeholder="Tags (comma-separated)" />
             <button type="submit">Update Post</button>
             <button type="button" onClick={onCancel}>Cancel</button>
         </form>
+        </Layout>
+
     );
 };
 

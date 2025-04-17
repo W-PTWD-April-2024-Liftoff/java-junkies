@@ -1,6 +1,6 @@
 const Footer = () => {
     return (
-      <footer className="footer">
+      <footer className="footer" style={{margin: '0'}}>
         © 2025 In the Loop | Built with ❤️
       </footer>
     );

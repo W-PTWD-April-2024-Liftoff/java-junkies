@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Layout from "./Layout";
 
 
 const RatingPost = (params) => {
@@ -13,7 +14,7 @@ const RatingPost = (params) => {
     }
     const handleRate = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/posts/${post.id}/rate`, {
+            const response = await fetch(`http://localhost:5176/api/posts/${post.id}/rate`, {
                 method : "PUT",
                 headers : { "Content-Type": "application/json" },
                 body : JSON.stringify({rating})
@@ -50,6 +51,7 @@ const RatingPost = (params) => {
     }
 
     return (
+
         <div className="rating-section">
             <select id="rating" name="rating" onChange={(event) => {
                 console.log(event.target.value)
@@ -68,6 +70,7 @@ const RatingPost = (params) => {
                 displayRatings()
             }
         </div>
+
     )
 }
 

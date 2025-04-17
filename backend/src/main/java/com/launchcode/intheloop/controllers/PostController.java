@@ -1,15 +1,18 @@
 package com.launchcode.intheloop.controllers;
 
+import com.launchcode.intheloop.models.CustomUserDetails;
 import com.launchcode.intheloop.models.Post;
 import com.launchcode.intheloop.models.Rating;
 import com.launchcode.intheloop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/posts")
 public class PostController {
 
@@ -22,7 +25,7 @@ public class PostController {
     }
 
     @PostMapping()
-    public Post createPost(@RequestBody Post post) {
+    public Post createPost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody Post post) {
         return postService.createPost(post);
     }
 

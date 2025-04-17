@@ -18,7 +18,7 @@ export function PhotoUploader({ userId }) {
       formData.append("id", userId);
 
       try {
-          const res = await fetch("http://localhost:8080/user/upload-photo", {
+          const res = await fetch("http://localhost:5176/api/user/upload-photo", {
               method: "POST",
               body: formData,
               });
@@ -52,13 +52,7 @@ export function PhotoUploader({ userId }) {
           dragProps,
         }) => (
           <div className="upload__image-wrapper">
-            <button
-              style={isDragging ? { color: 'red' } : undefined}
-              onClick={onImageUpload}
-              {...dragProps}
-            >
-              Click or Drop here
-            </button>
+
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
                 <img src={image['data_url']} alt="" width="100" />
@@ -68,7 +62,14 @@ export function PhotoUploader({ userId }) {
               </div>
             ))}
             <br />
-            <button onClick={handleUpload}>Upload</button>
+               <button
+                          style={{ backgroundColor: 'lightblue', color: 'black', padding: '10px 20px', float: 'left', margin: '5px', border: '10px', borderRadius: '5px' }}
+                          onClick={onImageUpload}
+                          {...dragProps}
+                        >
+                          Choose Photo
+                        </button>
+            <button style={{ backgroundColor: 'lightblue', color: 'black', padding: '10px 20px', border: '10px', margin: '5px', borderRadius: '5px' }} onClick={handleUpload}>Upload</button>
           </div>
         )}
       </ImageUploading>

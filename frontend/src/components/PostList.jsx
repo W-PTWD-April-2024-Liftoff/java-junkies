@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Layout from "./Layout";
 
 const PostList = () => {
     const [posts, setPosts] = useState([]);
@@ -10,7 +11,7 @@ const PostList = () => {
     const fetchPosts = async () => {
 
         try{
-            const response = await fetch("http://localhost:8080/posts");
+            const response = await fetch("http://localhost:5176/api/posts");
             if(!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -23,9 +24,11 @@ const PostList = () => {
     };
 
         return (
+
             <div>
                  <h1>Discussion Posts</h1>
             <ul>
+                <ProfilePageButton />
                 {posts.map((post) => (
                     <li key={post.id}>
                         <h3>{post.title}</h3>
@@ -39,6 +42,8 @@ const PostList = () => {
                 ))}
             </ul>
             </div>
+
+
         );
 
     

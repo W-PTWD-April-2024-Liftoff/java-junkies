@@ -37,8 +37,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void save(User user){
-        userRepository.save(user);
+    public User save(User user){
+        return userRepository.save(user);
     }
 
     public String saveImageWithUUID(MultipartFile file, String uploadDir) throws IOException {
@@ -61,7 +61,11 @@ public class UserService {
     }
 
     public Optional<User> findByEmail(String email) {
-        return Optional.empty();
+        return userRepository.findByEmail(email);
     }
+
+//    public Optional<User> findByEmail(String email) {
+//        return Optional.empty();
+//    }
 }
 
