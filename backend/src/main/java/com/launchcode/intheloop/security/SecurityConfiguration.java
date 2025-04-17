@@ -19,6 +19,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.authorization.AuthorizationManagers;
+import org.springframework.security.authorization.AuthorityAuthorizationManager;
+import org.springframework.security.authorization.AuthenticatedAuthorizationManager;
 
 import java.util.List;
 
@@ -42,10 +45,10 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http://localhost:*")); // ✅ Use patterns, not wildcard
+        config.setAllowedOriginPatterns(List.of("http://localhost:*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // ✅ Important for cookies
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
@@ -66,26 +69,66 @@ public class SecurityConfiguration {
                                 "/user/details/**",
                                 "/user/update-profile/**",
                                 "/user/upload-photo"
+
                         ).permitAll()
+
+                        .requestMatchers("/posts").access(AuthorizationManagers.anyOf(
+                                AuthorityAuthorizationManager.hasAuthority("SCOPE_read:posts"),
+                                AuthenticatedAuthorizationManager.authenticated()
+                        ))
+                        .requestMatchers("/posts/**").access(AuthorizationManagers.anyOf(
+                                AuthorityAuthorizationManager.hasAuthority("SCOPE_write:posts"),
+                                AuthorityAuthorizationManager.hasAuthority("SCOPE_create:posts"),
+                                AuthorityAuthorizationManager.hasAuthority("SCOPE_update:posts"),
+                                AuthorityAuthorizationManager.hasAuthority("SCOPE_delete:posts"),
+                                AuthenticatedAuthorizationManager.authenticated()
+                        ))
+                        .requestMatchers("/user/{id}/profile", "/user/details/**", "/user/{id}", "/user/all").access(
+                                AuthorizationManagers.anyOf(
+                                        AuthorityAuthorizationManager.hasAuthority("SCOPE_read:profile"),
+                                        AuthenticatedAuthorizationManager.authenticated()
+                                )
+                        )
+                        .requestMatchers("/user/update-profile/**", "/user/{id}").access(
+                                AuthorizationManagers.anyOf(
+                                        AuthorityAuthorizationManager.hasAuthority("SCOPE_update:profile"),
+                                        AuthenticatedAuthorizationManager.authenticated()
+                                )
+                        )
+                        .requestMatchers("/user/upload-photo").access(
+                                AuthorizationManagers.anyOf(
+                                        AuthorityAuthorizationManager.hasAuthority("SCOPE_upload:photo"),
+                                        AuthenticatedAuthorizationManager.authenticated()
+                                )
+                        )
+
+
                         .anyRequest().authenticated()
                 ).sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // NEW STYLE
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
                 .securityContext(securityContext -> securityContext
-                        .requireExplicitSave(false) // ❗ this is important
+                        .requireExplicitSave(false)
                 )
-                .userDetailsService(customUserDetailsService);
-//                .oauth2ResourceServer(oauth2 -> oauth2
-//                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-//                );
-
+                .logout(logout -> logout
+                    .logoutUrl("/user/logout")
+                    .logoutSuccessHandler((request, response, authentication) -> {
+                        response.setStatus(HttpServletResponse.SC_OK);
+                })
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+        )
+                .userDetailsService(customUserDetailsService)
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                );
         return http.build();
     }
 
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        grantedAuthoritiesConverter.setAuthorityPrefix("SCOPE_");
         grantedAuthoritiesConverter.setAuthoritiesClaimName("permissions");
 
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();

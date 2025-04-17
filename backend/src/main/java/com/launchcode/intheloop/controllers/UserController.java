@@ -116,6 +116,13 @@ public class UserController {
         }
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok("Logged out successfully");
+    }
+
     @GetMapping("/exists")
     public ResponseEntity<?> checkUserExists(@RequestParam String email) {
         Optional<User> user = userService.findByEmail(email);
@@ -160,7 +167,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/{id}/profile")
+    @GetMapping("/profile/{id}")
         public ResponseEntity<?> getProfile (@PathVariable Long id) {
             Optional<User> optionalUser = userService.findUserById(id);
 

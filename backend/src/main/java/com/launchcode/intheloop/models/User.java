@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Setter
 @Getter
+@Table(name = "user")
 public class User extends AbstractEntity {
 
 
