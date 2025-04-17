@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import Layout from "./Layout";
+import { useAuth0 } from "@auth0/auth0-react";
+import { buildAuthHeader } from "../utils/buildAuthHeader";
 
 
 const RatingPost = (params) => {
     const {post, setIsRatingChanged} = params || {};
     const [rating, setRating] = useState(null);
+    const { getAccessTokenSilently } = useAuth0();
     const ratingMap = {
         5: "Excellent",
         4: "Very Good",
@@ -13,10 +16,11 @@ const RatingPost = (params) => {
         1: "Poor"
     }
     const handleRate = async () => {
+        const headers = await buildAuthHeader({getAccessTokenSilently})
         try {
             const response = await fetch(`http://localhost:5176/api/posts/${post.id}/rate`, {
                 method : "PUT",
-                headers : { "Content-Type": "application/json" },
+                headers,
                 body : JSON.stringify({rating})
             });
 
