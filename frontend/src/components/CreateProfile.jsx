@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PhotoUploader from './PhotoUploader';
+import Layout from './Layout';
 
 const UpdateProfilePage = () => {
-  const { id } = useParams(); // Comes from the route /update-profile/:id
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
@@ -14,26 +15,28 @@ const UpdateProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // Function to fetch updated user data
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(`http://localhost:5176/api/user/details/${id}`);
+      const text = await response.text();
+      if (!response.ok) throw new Error(text);
+      const data = JSON.parse(text);
+      setUser(data);
+      setName(data.name || '');
+      setEmail(data.email || '');
+      setUsername(data.username || '');
+      setBio(data.bio || '');
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching user:', err.message);
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetch(`http://localhost:5176/api/user/details/${id}`)
-      .then(async (res) => {
-        const text = await res.text();
-        if (!res.ok) throw new Error(text);
-        return JSON.parse(text);
-      })
-      .then((data) => {
-        setUser(data);
-        setName(data.name || '');
-        setEmail(data.email || '');
-        setUsername(data.username || '');
-        setBio(data.bio || '');
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error loading user:", err.message);
-        setError(err.message);
-        setLoading(false);
-      });
+    fetchUserData();
   }, [id]);
 
   const handleSubmit = async (e) => {
@@ -65,6 +68,10 @@ const UpdateProfilePage = () => {
   };
 
   const handleGoToPosts = () => {
+    navigate('/posts');
+  };
+
+  const handleGoToLogin = () => {
     navigate('/user/login');
   };
 
@@ -72,11 +79,11 @@ const UpdateProfilePage = () => {
   if (!user) return <p>User not found</p>;
 
   return (
-
+    <Layout>
       <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
         <h2>Update Your Profile</h2>
         <form onSubmit={handleSubmit}>
-          <PhotoUploader userId={user.id} />
+          <PhotoUploader userId={user.id} onUploadSuccess={fetchUserData} />
 
           <label>Name:</label><br />
           <input
@@ -107,11 +114,13 @@ const UpdateProfilePage = () => {
           /><br /><br />
 
           <button type="submit" style={{ marginRight: '10px' }}>Save</button>
-          <button type="button" onClick={handleGoToPosts}>Login</button>
+          <button type="button" onClick={handleGoToPosts}>Go to Posts</button>
+          <button type="button" onClick={handleGoToLogin} style={{ marginLeft: '10px' }}>Login</button>
         </form>
       </div>
-
+    </Layout>
   );
 };
 
 export default UpdateProfilePage;
+
