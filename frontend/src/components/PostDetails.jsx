@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const PostDetails = () => {
     const [posts, setPosts] = useState([]);
+    const {id} =useParams();
 
     useEffect(() => {
-        fetchPosts();
-     },[])
+        if (id) {
+            fetchPosts(id);
+        }
+     },[id])
 
     const fetchPosts = async (id) => {
 
