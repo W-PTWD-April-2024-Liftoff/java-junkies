@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import logo from '../assets/logo.png';
 import LogOut from './LogOut';
@@ -10,6 +10,7 @@ function CustomNavbar() {
   const location = useLocation();
   const { isAuthenticated } = useAuth0();
   const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
+  const { id } = useParams();
 
   const renderNavbar = (isAuthenticated || passwordLogin) &&
     !['/user/login', '/user/register'].includes(location.pathname);
@@ -34,7 +35,7 @@ function CustomNavbar() {
 
 
         <Nav className='ms-auto'>
-          <Nav.Link as={Link} to="/profile">Profile</Nav.Link>
+          <Nav.Link as={Link} to={`/user/profile/${id}`}>Profile</Nav.Link>
           {/* <Nav.Link as={Link} to="user/login">Log Out</Nav.Link> */}
           <Nav.Item>
             <LogOut/>

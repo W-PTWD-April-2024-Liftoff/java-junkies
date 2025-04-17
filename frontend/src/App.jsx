@@ -39,6 +39,7 @@ function App() {
         <Route path="/user/login" element={<Login />} />
         <Route path="/update-profile/:id" element={<CreateProfile />} />
         <Route path="/posts" element={<Discussion />} />
+        <Route path="/user/profile/:id" element={<Profile_Page />} />
       </Routes>
       </div>
     </div>

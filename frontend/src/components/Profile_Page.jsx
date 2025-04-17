@@ -10,7 +10,9 @@ function ProfilePage() {
 
   useEffect(() => {
 
-    fetch(`http://localhost:8080/user/profile/${id}`)
+    fetch(`http://localhost:8080/user/profile/${id}`, {
+      credentials: 'include',
+    })
       .then(async (res) => {
         const text = await res.text();
         if (!res.ok) throw new Error(text);
