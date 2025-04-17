@@ -4,7 +4,6 @@ import Button from "./Button";
 import InputField from "./InputField";
 import Layout from "./Layout";
 
-
 export default function RegistrationForm() {
   const navigate = useNavigate();
 
@@ -29,13 +28,13 @@ export default function RegistrationForm() {
     if (formData.password !== formData.verifiedPassword) {
       alert('Passwords must match.');
       return;
-    };
+    }
 
     const newUser = {
       email: formData.email,
       username: formData.username,
       password: formData.password,
-      verify: formData.verifiedPassword
+      verify: formData.verifiedPassword,
     };
 
     try {
@@ -49,74 +48,66 @@ export default function RegistrationForm() {
 
       if (response.ok) {
         const createdUser = await response.json();
+
+
+        localStorage.setItem("userId", createdUser.id);
+
         alert(`${formData.email} was registered successfully!`);
         navigate(`/update-profile/${createdUser.id}`);
       } else {
         const error = await response.json();
-        alert("Error " + error.error);
+        alert("Error: " + error.error);
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('Something went wrong. Try again.')
-    };
+      alert('Something went wrong. Try again.');
+    }
   };
 
   return (
 
-    <div>
-      <h1>In the Loop</h1>
-      <h2>Create an Account</h2>
-      <form onSubmit={handleSubmit}>
+      <div style={{ maxWidth: '500px', margin: '0 auto', padding: '20px' }}>
+        <h1>In the Loop</h1>
+        <h2>Create an Account</h2>
+        <form onSubmit={handleSubmit}>
 
-        <div>
           <InputField
             type='email'
             name='email'
             value={formData.email}
             onChange={handleChange}
-            placeholder="Enter your email">
-          </InputField>
-        </div>
+            placeholder="Enter your email"
+          />
 
-        <div>
           <InputField
             type='text'
             name='username'
             value={formData.username}
             onChange={handleChange}
-            placeholder="Enter a username">
-          </InputField>
-        </div>
+            placeholder="Choose a username"
+          />
 
-        <div>
           <InputField
             type='password'
             name='password'
             value={formData.password}
             onChange={handleChange}
-            placeholder="Enter a password">
-          </InputField>
-        </div>
+            placeholder="Enter a password"
+          />
 
-        <div>
           <InputField
             type='password'
             name='verifiedPassword'
             value={formData.verifiedPassword}
             onChange={handleChange}
-            placeholder="Re-enter password">
-          </InputField>
-        </div>
-
-        <div>
-          <Button
-            text="Register"
-            type="submit"
+            placeholder="Re-enter password"
           />
-        </div>
-      </form>
-    </div>
+
+          <div style={{ marginTop: '1rem' }}>
+            <Button text="Register" type="submit" />
+          </div>
+        </form>
+      </div>
 
   );
-};
-
+}

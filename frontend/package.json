@@ -12,7 +12,11 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.3.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@formspree/react": "^3.0.0",
+    "@mui/lab": "^7.0.0-beta.11",
+    "@mui/material": "^7.0.2",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
     "react": "^19.0.0",

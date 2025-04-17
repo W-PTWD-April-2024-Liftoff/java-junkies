@@ -94,4 +94,9 @@ public class PostService {
             throw new RuntimeException("Post not found");
         }
     }
+
+//    public List<Post> searchPosts(String searchTerm) {
+//        return postRepository.searchPosts(searchTerm);
+//    }
+
 }

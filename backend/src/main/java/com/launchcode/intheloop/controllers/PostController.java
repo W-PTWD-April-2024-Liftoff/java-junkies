@@ -6,11 +6,14 @@ import com.launchcode.intheloop.models.Post;
 import com.launchcode.intheloop.models.Rating;
 import com.launchcode.intheloop.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -58,4 +61,11 @@ public class PostController {
     public Post updatePostById(@PathVariable Long id,@RequestBody Post updatePost){
         return postService.updatePostById(id, updatePost);
     }
+
+//    @GetMapping("/posts/search")
+//    public ResponseEntity<List<Post>> searchPosts(@RequestParam String searchTerm) {
+//        System.out.println("searching with " + searchTerm);
+//        List<Post> posts = postService.searchPosts(searchTerm);
+//        return new ResponseEntity<>(posts, HttpStatus.OK);
+//    }
 }

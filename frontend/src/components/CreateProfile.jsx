@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import PhotoUploader from './PhotoUploader';
 
 const UpdateProfilePage = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Comes from the route /update-profile/:id
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
@@ -11,11 +11,11 @@ const UpdateProfilePage = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [bio, setBio] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/user/details/${id}`)
+    fetch(`http://localhost:5176/api/user/details/${id}`)
       .then(async (res) => {
         const text = await res.text();
         if (!res.ok) throw new Error(text);
@@ -30,16 +30,11 @@ const UpdateProfilePage = () => {
         setLoading(false);
       })
       .catch((err) => {
+        console.error("Error loading user:", err.message);
         setError(err.message);
         setLoading(false);
       });
   }, [id]);
-
-
-  const handleClick = () => {
-    navigate('/user/login');
-  };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +48,7 @@ const UpdateProfilePage = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/api/user/update-profile/${id}`, {
+      const response = await fetch(`http://localhost:5176/api/user/update-profile/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedUser),
@@ -62,39 +57,60 @@ const UpdateProfilePage = () => {
       if (!response.ok) throw new Error("Update failed");
 
       const updated = await response.json();
-      alert("Profile updated!");
+      alert("Profile updated successfully!");
       setUser(updated);
     } catch (err) {
       alert("Error: " + err.message);
     }
   };
 
+  const handleGoToPosts = () => {
+    navigate('/user/login');
+  };
+
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (!user) return <p>User not found</p>;
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Profile</h1>
-      <form onSubmit={handleSubmit}>
+
+      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
+        <h2>Update Your Profile</h2>
+        <form onSubmit={handleSubmit}>
           <PhotoUploader userId={user.id} />
-        <label>Name:</label><br />
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} /><br /><br />
 
-        <label>Email:</label><br />
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /><br /><br />
+          <label>Name:</label><br />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          /><br /><br />
 
-        <label>Username:</label><br />
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} /><br /><br />
+          <label>Email:</label><br />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          /><br /><br />
 
-        <label>Bio:</label><br />
-        <textarea value={bio} onChange={(e) => setBio(e.target.value)} /><br /><br />
+          <label>Username:</label><br />
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          /><br /><br />
 
-        <button type="submit">Save
-        </button>
-        <button type="button" onClick={handleClick}>Main Page</button>
+          <label>Bio:</label><br />
+          <textarea
+            rows="4"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          /><br /><br />
 
-      </form>
-    </div>
+          <button type="submit" style={{ marginRight: '10px' }}>Save</button>
+          <button type="button" onClick={handleGoToPosts}>Login</button>
+        </form>
+      </div>
+
   );
 };
 
