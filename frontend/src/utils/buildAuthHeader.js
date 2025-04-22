@@ -1,7 +1,7 @@
 export const buildAuthHeader = async ({getAccessTokenSilently}) => {
     const passwordLogin = localStorage.getItem('passwordLogin') === 'true';
     let headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     };
     if (!passwordLogin) {
         const JWTtoken = await getAccessTokenSilently({

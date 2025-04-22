@@ -23,9 +23,7 @@ public class PostService {
     private RatingRepository ratingRepository;
 
     public Post createPost(Post post){
-//        if(post.getContent() != null){
-//            post.setContent(post.getContent());
-//        }
+
         return postRepository.save(post);
     }
 
