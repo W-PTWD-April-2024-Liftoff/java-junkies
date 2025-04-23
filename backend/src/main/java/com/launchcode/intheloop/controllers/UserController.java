@@ -228,18 +228,16 @@ public class UserController {
 
         Optional<User> optionalUser = userService.findUserById(userId);
         if (optionalUser.isEmpty()) {
-            System.out.println("User not found for ID: " + userId);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
 
-            String fileName = userService.saveImageWithUUID(file, uploadDir);
-        System.out.println("Saved image filename: " + fileName);
+        String fileName = userService.saveImageWithUUID(file, uploadDir);
+        Path savedPath = Paths.get(uploadDir).resolve(fileName);
+        System.out.println("Full image path: " + savedPath.toAbsolutePath());
 
             User user = optionalUser.get();
             user.setProfilePictureUpload(fileName);
-        System.out.println("Setting user.profilePictureUpload = " + fileName);
             userService.updateUser(user);
-        System.out.println("User updated and saved");
 
 
             return ResponseEntity.ok("Profile picture uploaded and linked to user");

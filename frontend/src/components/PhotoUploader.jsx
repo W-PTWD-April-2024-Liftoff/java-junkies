@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageUploading from 'react-images-uploading';
 
-export function PhotoUploader({ userId }) {
+export function PhotoUploader({ userId, onUploadSuccess }) {
   const [images, setImages] = React.useState([]);
   const maxNumber = 1;
 
@@ -25,7 +25,8 @@ export function PhotoUploader({ userId }) {
 
           const text = await res.text();
           if (res.ok) {
-              alert("ok " + text);
+            alert("Upload successful!");
+            if (onUploadSuccess) onUploadSuccess();
               } else {
                   alert("Upload failed: " + text);
                   }

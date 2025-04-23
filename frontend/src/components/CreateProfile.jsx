@@ -15,7 +15,7 @@ const UpdateProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Function to fetch updated user data
+
   const fetchUserData = async () => {
     try {
       const response = await fetch(`http://localhost:5176/api/user/details/${id}`);
@@ -51,11 +51,13 @@ const UpdateProfilePage = () => {
     };
 
     try {
-      const response = await fetch(`http://localhost:5176/api/user/update-profile/${id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedUser),
-      });
+    const response = await fetch(`http://localhost:5176/api/user/update-profile/${id}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedUser),
+      credentials: 'include'
+    });
+
 
       if (!response.ok) throw new Error("Update failed");
 

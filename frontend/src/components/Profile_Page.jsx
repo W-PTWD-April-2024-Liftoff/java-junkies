@@ -28,6 +28,7 @@ const ProfilePage = () => {
 
         const data = JSON.parse(text);
         setUser(data);
+        console.log("📸 user.profilePictureUpload:", data.profilePictureUpload);
       } catch (err) {
         console.error("Error fetching user:", err.message);
       } finally {
@@ -66,6 +67,7 @@ const ProfilePage = () => {
                  fluid
               alt="Profile Photo"
                />
+
               <h2 className='mb-1'>{user.name || 'N/A'}</h2>
               <p className='text-muted'>username: {user.username || 'N/A'}</p>
               <p className='text-muted'>email: {user.email || 'N/A'}</p>
@@ -95,41 +97,5 @@ const ProfilePage = () => {
 
 export default ProfilePage;
 
-// const styles = {
-//   container: {
-//     padding: '2rem',
-//     maxWidth: '600px',
-//     margin: 'auto',
-//     textAlign: 'center',
-//     backgroundColor: '#f7f7f7',
-//     borderRadius: '12px',
-//     boxShadow: '0 0 10px rgba(0,0,0,0.1)'
-//   },
-//   title: {
-//     fontSize: '2rem',
-//     marginBottom: '1rem'
-//   },
-//   image: {
-//     width: '120px',
-//     height: '120px',
-//     borderRadius: '50%',
-//     objectFit: 'cover',
-//     marginBottom: '1rem'
-//   },
-//   info: {
-//     textAlign: 'left',
-//     marginTop: '1rem',
-//     lineHeight: '1.6',
-//     fontSize: '1rem'
-//   },
-//   button: {
-//     marginTop: '1.5rem',
-//     padding: '10px 20px',
-//     backgroundColor: '#4e9af1',
-//     color: 'white',
-//     border: 'none',
-//     borderRadius: '6px',
-//     cursor: 'pointer'
-//   }
-// };
+
 
