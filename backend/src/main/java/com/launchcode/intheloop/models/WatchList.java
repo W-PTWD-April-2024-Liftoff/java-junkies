@@ -21,11 +21,11 @@ public class WatchList extends AbstractEntity{
     public String savedPosts;
 
     //may need a list here to store posts
-    @Getter
-    @Setter
-    @JoinColumn(name = "watchlist_id")
-    @OneToMany
-    private List<Post> posts = new ArrayList<>();
+//    @Getter
+//    @Setter
+//    @JoinColumn(name = "watchlist_id")
+//    @OneToMany
+//    private List<Post> posts = new ArrayList<>();
 
     public WatchList(){}
 }

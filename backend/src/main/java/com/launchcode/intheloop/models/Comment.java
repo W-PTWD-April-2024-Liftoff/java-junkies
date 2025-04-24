@@ -21,12 +21,14 @@ public class Comment extends AbstractEntity {
     @NotBlank
     private String text;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+//    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "post_id")
     @Getter(AccessLevel.NONE)
     private Post post;
+
+//    public Comment(){}
     
 
 }
