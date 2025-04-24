@@ -85,7 +85,8 @@ const UpdateProfilePage = () => {
       <div style={{ maxWidth: '600px', margin: '0 auto', padding: '20px' }}>
         <h2>Update Your Profile</h2>
         <form onSubmit={handleSubmit}>
-          <PhotoUploader userId={user.id} onUploadSuccess={fetchUserData} />
+          <PhotoUploader userId={id} onUploadSuccess={(updatedUser) => setUser(updatedUser)} />
+
 
           <label>Name:</label><br />
           <input
