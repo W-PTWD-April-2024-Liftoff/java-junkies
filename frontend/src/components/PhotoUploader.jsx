@@ -27,7 +27,7 @@ export function PhotoUploader({ userId, onUploadSuccess }) {
      const data = await res.json();
      if (res.ok) {
        alert("Upload successful!");
-       if (onUploadSuccess) onUploadSuccess(data); // 🔁 pass new user back
+       if (onUploadSuccess) onUploadSuccess(data);
      } else {
        alert("Upload failed: " + data.message || "Unknown error");
      }
